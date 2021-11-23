@@ -6,6 +6,6 @@ namespace MarketProcessor.MarketConditionQualifier.Interfaces
 {
     public interface IConditionQualifier
     {
-        public MarketConditions GetCurrentCondition(IList<CandleStickChart> candleSticks);
+        public void Process(IList<CandleStickChart> candleSticks);
     }
 }
