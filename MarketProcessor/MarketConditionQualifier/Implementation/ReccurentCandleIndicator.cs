@@ -1,13 +1,10 @@
-﻿using MarketProcessor.Entities;
-using MarketProcessor.Enums;
+﻿using System.Collections.Generic;
+using MarketProcessor.Entities;
 using MarketProcessor.MarketConditionQualifier.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Data;
 
 namespace MarketProcessor.MarketConditionQualifier.Implementation
 {
-    public class ReccurentCandleIndicator : IConditionQualifier
+    internal class ReccurentCandleIndicator : IConditionQualifier
     {
         public void Process(IList<CandleStickChart> candleSticks)
         {
