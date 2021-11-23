@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using MarketProcessor.Entities;
 using MarketProcessor.MarketConditionQualifier.Interfaces;
 
+[assembly: InternalsVisibleTo("MarketProcessor.Tests")]
 namespace MarketProcessor.MarketConditionQualifier.Implementation
 {
     internal class ReccurentCandleIndicator : IConditionQualifier
