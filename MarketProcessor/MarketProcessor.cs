@@ -14,6 +14,11 @@ namespace MarketProcessor
             _conditionQualifier = conditionQualifier;
         }
 
+        public void SelectQualifier(IConditionQualifier conditionQualifier)
+        {
+            _conditionQualifier = conditionQualifier;
+        }
+
         public void Process()
         {
             _conditionQualifier.Process(_candleSticks);
