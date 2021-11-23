@@ -14,9 +14,9 @@ namespace MarketProcessor.MarketConditionQualifier.Implementation
             // The indexer starts from 2 because we have to compare current candle value 
             // with two previous values. The comparing window includes 5 neighbour candles,
             // where current is the middle one.
-            for (int i = 2; i < data.Rows.Count - 2; i++)
+            for (int i = 2; i < candleSticks.Count - 2; i++)
             {
-                if (data.Rows[i][1] > data.Rows[i][2])
+                if ()
             }
         }
     }
