@@ -11,6 +11,7 @@ namespace MarketProcessor
 
         public MarketProcessor(IConditionQualifier conditionQualifier)
         {
+            StartUp.Init();
             _conditionQualifier = conditionQualifier;
         }
 
