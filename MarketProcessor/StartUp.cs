@@ -16,6 +16,5 @@ namespace MarketProcessor
                  { "Reccurent Candle Indicator", new ReccurentCandleIndicator() }
              };
         }
-
     }
 }
