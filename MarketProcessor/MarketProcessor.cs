@@ -1,35 +1,37 @@
 ﻿using System.Collections.Generic;
 using MarketProcessor.Entities;
-using MarketProcessor.MarketConditionQualifier.Interfaces;
+using MarketProcessor.MarketIndicators.Interfaces;
 
 namespace MarketProcessor
 {
     public class MarketProcessor
     {
         private IList<CandleStickChart> _candleSticks = new List<CandleStickChart>();
-        private IConditionQualifier _conditionQualifier;
+        private IMarketIndicator _marketIndicator;
 
-        public MarketProcessor(IConditionQualifier conditionQualifier)
+        public IList<CandleStickChart> GetCandleStickCharts() => _candleSticks;
+
+        public IDictionary<string, IMarketIndicator> GetRegisteredMarketIndicators() => StartUp.MarketIndicators;
+
+        public MarketProcessor(IMarketIndicator marketIndicator)
         {
             StartUp.Init();
-            _conditionQualifier = conditionQualifier;
+            _marketIndicator = marketIndicator;
         }
 
-        public void SelectQualifier(IConditionQualifier conditionQualifier)
+        public void SelectMarketIndicator(IMarketIndicator marketIndicator)
         {
-            _conditionQualifier = conditionQualifier;
+            _marketIndicator = marketIndicator;
         }
 
         public void Process()
         {
-            _conditionQualifier.Process(_candleSticks);
+            _marketIndicator.Process(_candleSticks);
         }
 
-        public void Load(IList<CandleStickChart> candleSticks)
+        public void LoadCandleStickCharts(IList<CandleStickChart> candleSticks)
         {
             _candleSticks = candleSticks;
-        }
-
-        public IList<CandleStickChart> Get() => _candleSticks;
+        }        
     }
 }

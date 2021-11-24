@@ -1,9 +1,9 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using MarketProcessor.Entities;
-using MarketProcessor.MarketConditionQualifier.Implementation;
+using MarketProcessor.MarketIndicators.Implementation;
 
-namespace MarketProcessor.Tests.MarketConditionQualifierTests
+namespace MarketProcessor.Tests.MarketIndicatorsTests
 {
     public class ReccurentCandleIndicatorTests
     {

@@ -1,9 +1,9 @@
 ﻿using MarketProcessor.Entities;
 using System.Collections.Generic;
 
-namespace MarketProcessor.MarketConditionQualifier.Interfaces
+namespace MarketProcessor.MarketIndicators.Interfaces
 {
-    public interface IConditionQualifier
+    public interface IMarketIndicator
     {
         public void Process(IList<CandleStickChart> candleSticks);
     }

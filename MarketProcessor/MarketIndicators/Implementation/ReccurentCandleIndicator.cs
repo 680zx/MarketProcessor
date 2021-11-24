@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using MarketProcessor.Entities;
-using MarketProcessor.MarketConditionQualifier.Interfaces;
+using MarketProcessor.MarketIndicators.Interfaces;
 
 [assembly: InternalsVisibleTo("MarketProcessor.Tests")]
-namespace MarketProcessor.MarketConditionQualifier.Implementation
+namespace MarketProcessor.MarketIndicators.Implementation
 {
-    internal class ReccurentCandleIndicator : IConditionQualifier
+    internal class ReccurentCandleIndicator : IMarketIndicator
     {
         public void Process(IList<CandleStickChart> candleSticks)
         {

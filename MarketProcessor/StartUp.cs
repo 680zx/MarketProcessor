@@ -1,17 +1,17 @@
-﻿using MarketProcessor.MarketConditionQualifier.Implementation;
-using MarketProcessor.MarketConditionQualifier.Interfaces;
+﻿using MarketProcessor.MarketIndicators.Implementation;
+using MarketProcessor.MarketIndicators.Interfaces;
 using System.Collections.Generic;
 
 namespace MarketProcessor
 {
     internal class StartUp
     {
-        private static Dictionary<string, IConditionQualifier> _marketQualifiers;
-        internal static Dictionary<string, IConditionQualifier> MarketQualifiers => _marketQualifiers;
+        private static Dictionary<string, IMarketIndicator> _marketIndicators;
+        internal static Dictionary<string, IMarketIndicator> MarketIndicators => _marketIndicators;
 
         internal static void Init()
         {
-            _marketQualifiers = new Dictionary<string, IConditionQualifier>
+            _marketIndicators = new Dictionary<string, IMarketIndicator>
              {
                  { "Reccurent Candle Indicator", new ReccurentCandleIndicator() }
              };
