@@ -6,12 +6,12 @@ namespace MarketProcessor
 {
     internal class StartUp
     {
-        private static Dictionary<string, IMarketIndicator> _marketIndicators;
-        internal static Dictionary<string, IMarketIndicator> MarketIndicators => _marketIndicators;
+        private static Dictionary<string, IMarketIndicator> _registeredMarketIndicators;
+        internal static Dictionary<string, IMarketIndicator> RegisteredMarketIndicators => _registeredMarketIndicators;
 
         internal static void Init()
         {
-            _marketIndicators = new Dictionary<string, IMarketIndicator>
+            _registeredMarketIndicators = new Dictionary<string, IMarketIndicator>
              {
                  { "Reccurent Candle Indicator", new ReccurentCandleIndicator() }
              };

@@ -11,7 +11,7 @@ namespace MarketProcessor
 
         public IList<CandleStickChart> GetCandleStickCharts() => _candleSticks;
 
-        public IDictionary<string, IMarketIndicator> GetRegisteredMarketIndicators() => StartUp.MarketIndicators;
+        public IDictionary<string, IMarketIndicator> GetRegisteredMarketIndicators() => StartUp.RegisteredMarketIndicators;
 
         public MarketProcessor(IMarketIndicator marketIndicator)
         {
