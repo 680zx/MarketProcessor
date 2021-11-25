@@ -1,8 +1,8 @@
-﻿using MarketProcessor.MarketIndicators.Implementation;
-using MarketProcessor.MarketIndicators.Interfaces;
+﻿using MarketAnalyzer.MarketIndicators.Implementation;
+using MarketAnalyzer.MarketIndicators.Interfaces;
 using System.Collections.Generic;
 
-namespace MarketProcessor
+namespace MarketAnalyzer
 {
     internal class StartUp
     {

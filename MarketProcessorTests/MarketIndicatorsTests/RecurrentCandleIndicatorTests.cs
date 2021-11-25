@@ -1,9 +1,9 @@
 using NUnit.Framework;
 using System.Collections.Generic;
-using MarketProcessor.Entities;
-using MarketProcessor.MarketIndicators.Implementation;
+using MarketAnalyzer.Entities;
+using MarketAnalyzer.MarketIndicators.Implementation;
 
-namespace MarketProcessor.Tests.MarketIndicatorsTests
+namespace MarketAnalyzer.Tests.MarketIndicatorsTests
 {
     public class RecurrentCandleIndicatorTests
     {

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using MarketProcessor.Entities;
-using MarketProcessor.MarketIndicators.Interfaces;
+using MarketAnalyzer.Entities;
+using MarketAnalyzer.MarketIndicators.Interfaces;
 
-namespace MarketProcessor
+namespace MarketAnalyzer
 {
-    public class MarketProcessor
+    public class MarketAnalyzer
     {
         private IList<BaseIndicatorBlock> _candleSticks = new List<BaseIndicatorBlock>();
         private IMarketIndicator _marketIndicator;
@@ -14,7 +14,7 @@ namespace MarketProcessor
 
         public IDictionary<string, IMarketIndicator> GetRegisteredMarketIndicators() => StartUp.RegisteredMarketIndicators;
 
-        public MarketProcessor()
+        public MarketAnalyzer()
         {
             StartUp.Init();
         }
@@ -36,7 +36,7 @@ namespace MarketProcessor
                 throw new ArgumentException("Number of candlesticks is 0, pass correct data",
                     nameof(_candleSticks));
 
-            _marketIndicator.Process(_candleSticks);
+            _candleSticks = _marketIndicator.Process(_candleSticks);
         }
 
         public void LoadCandleStickCharts(IList<BaseIndicatorBlock> candleSticks)

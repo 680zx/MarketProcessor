@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using MarketProcessor.Entities;
-using MarketProcessor.MarketIndicators.Interfaces;
+using MarketAnalyzer.Entities;
+using MarketAnalyzer.MarketIndicators.Interfaces;
 using AutoMapper;
 
-[assembly: InternalsVisibleTo("MarketProcessor.Tests")]
-namespace MarketProcessor.MarketIndicators.Implementation
+[assembly: InternalsVisibleTo("MarketAnalyzer.Tests")]
+namespace MarketAnalyzer.MarketIndicators.Implementation
 {
     internal class RecurrentCandleIndicator : IMarketIndicator
     {

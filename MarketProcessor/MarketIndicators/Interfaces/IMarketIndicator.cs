@@ -1,7 +1,7 @@
-﻿using MarketProcessor.Entities;
+﻿using MarketAnalyzer.Entities;
 using System.Collections.Generic;
 
-namespace MarketProcessor.MarketIndicators.Interfaces
+namespace MarketAnalyzer.MarketIndicators.Interfaces
 {
     public interface IMarketIndicator
     {

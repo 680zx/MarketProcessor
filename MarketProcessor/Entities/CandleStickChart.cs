@@ -1,5 +1,5 @@
 ﻿
-namespace MarketProcessor.Entities
+namespace MarketAnalyzer.Entities
 {
     public class CandleStickChart
     {
