@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MarketAnalyzer\MarketAnalyzer.csproj" />
     <ProjectReference Include="..\MarketProcessor\MarketAnalyzer.csproj" />
   </ItemGroup>
 
