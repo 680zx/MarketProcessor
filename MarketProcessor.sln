@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketAnalyzer", "MarketAna
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketAnalyzer.Tests", "MarketAnalyzerTests\MarketAnalyzer.Tests.csproj", "{06F1D1CD-DAA5-4C9A-B024-011AA741BD7D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketProcessor", "MarketProcessor\MarketProcessor.csproj", "{2B8346F2-EBBC-4404-B599-9351549F4B2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{06F1D1CD-DAA5-4C9A-B024-011AA741BD7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06F1D1CD-DAA5-4C9A-B024-011AA741BD7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06F1D1CD-DAA5-4C9A-B024-011AA741BD7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B8346F2-EBBC-4404-B599-9351549F4B2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B8346F2-EBBC-4404-B599-9351549F4B2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B8346F2-EBBC-4404-B599-9351549F4B2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B8346F2-EBBC-4404-B599-9351549F4B2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

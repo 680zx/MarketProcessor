@@ -5,7 +5,7 @@ using MarketAnalyzer.MarketIndicators.Interfaces;
 
 namespace MarketAnalyzer
 {
-    public class MarketAnalyzer
+    public class Analyzer
     {
         private IList<BaseIndicatorBlock> _candleSticks = new List<BaseIndicatorBlock>();
         private IMarketIndicator _marketIndicator;
@@ -14,7 +14,7 @@ namespace MarketAnalyzer
 
         public IDictionary<string, IMarketIndicator> GetRegisteredMarketIndicators() => StartUp.RegisteredMarketIndicators;
 
-        public MarketAnalyzer()
+        public Analyzer()
         {
             StartUp.Init();
         }
