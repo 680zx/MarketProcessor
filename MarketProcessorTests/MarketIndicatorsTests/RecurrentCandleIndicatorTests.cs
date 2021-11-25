@@ -56,10 +56,10 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
             var candleIndicator = new RecurrentCandleIndicator();
 
             // Act
-            candleIndicator.Process(_testedCandleSticks);
+            var processedCandlerSticks = candleIndicator.Process(_testedCandleSticks);
 
             // Assert
-            Assert.IsTrue(AreListsEqual(_testedCandleSticks, _desiredOutputList));
+            Assert.IsTrue(AreListsEqual(processedCandlerSticks, _desiredOutputList));
         }
 
         private static bool AreListsEqual(IList<BaseIndicatorBlock> list1, IList<BaseIndicatorBlock> list2)
