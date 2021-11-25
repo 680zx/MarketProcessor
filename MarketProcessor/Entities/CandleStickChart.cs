@@ -10,7 +10,5 @@ namespace MarketProcessor.Entities
         public double UpperShadow { get; set; }
         public double LowerShadow { get; set; }
         public double RealBody { get; set; }
-        public bool IsSupport { get;set; }
-        public bool IsResistance { get;set;}
     }
 }

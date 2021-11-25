@@ -5,6 +5,6 @@ namespace MarketProcessor.MarketIndicators.Interfaces
 {
     public interface IMarketIndicator
     {
-        public void Process(IList<CandleStickChart> candleSticks);
+        public void Process(IList<BaseIndicatorBlock> candleSticks);
     }
 }

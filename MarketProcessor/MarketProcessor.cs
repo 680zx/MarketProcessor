@@ -7,10 +7,10 @@ namespace MarketProcessor
 {
     public class MarketProcessor
     {
-        private IList<CandleStickChart> _candleSticks = new List<CandleStickChart>();
+        private IList<BaseIndicatorBlock> _candleSticks = new List<BaseIndicatorBlock>();
         private IMarketIndicator _marketIndicator;
 
-        public IList<CandleStickChart> GetCandleStickCharts() => _candleSticks;
+        public IList<BaseIndicatorBlock> GetCandleStickCharts() => _candleSticks;
 
         public IDictionary<string, IMarketIndicator> GetRegisteredMarketIndicators() => StartUp.RegisteredMarketIndicators;
 
@@ -21,11 +21,8 @@ namespace MarketProcessor
 
         public void SelectMarketIndicator(IMarketIndicator marketIndicator)
         {
-            if (marketIndicator == null)
-                throw new ArgumentNullException(nameof(marketIndicator),
+            _marketIndicator = marketIndicator ?? throw new ArgumentNullException(nameof(marketIndicator),
                     "Passed market indicator is null.");
-
-            _marketIndicator = marketIndicator;
         }
 
         public void Process()
@@ -42,13 +39,10 @@ namespace MarketProcessor
             _marketIndicator.Process(_candleSticks);
         }
 
-        public void LoadCandleStickCharts(IList<CandleStickChart> candleSticks)
+        public void LoadCandleStickCharts(IList<BaseIndicatorBlock> candleSticks)
         {
-            if (candleSticks == null)
-                throw new ArgumentNullException(nameof(candleSticks),
+            _candleSticks = candleSticks ?? throw new ArgumentNullException(nameof(candleSticks),
                     "Passed candlesticks data is null.");
-
-            _candleSticks = candleSticks;
         }
     }
 }
