@@ -6,7 +6,7 @@ using MarketProcessor.MarketIndicators.Interfaces;
 [assembly: InternalsVisibleTo("MarketProcessor.Tests")]
 namespace MarketProcessor.MarketIndicators.Implementation
 {
-    internal class ReccurentCandleIndicator : IMarketIndicator
+    internal class RecurrentCandleIndicator : IMarketIndicator
     {
         public void Process(IList<CandleStickChart> candleSticks)
         {

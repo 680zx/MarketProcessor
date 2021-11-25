@@ -5,7 +5,7 @@ using MarketProcessor.MarketIndicators.Implementation;
 
 namespace MarketProcessor.Tests.MarketIndicatorsTests
 {
-    public class ReccurentCandleIndicatorTests
+    public class RecurrentCandleIndicatorTests
     {
         private IList<CandleStickChart> _testedCandleSticks = new List<CandleStickChart>
         {
@@ -53,7 +53,7 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
         public void Process_SimpleValuesList_TestedAndDesiredListsAreEqual()
         {
             // Arrange
-            var candleIndicator = new ReccurentCandleIndicator();
+            var candleIndicator = new RecurrentCandleIndicator();
 
             // Act
             candleIndicator.Process(_testedCandleSticks);

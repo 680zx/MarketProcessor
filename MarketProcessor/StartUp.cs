@@ -13,7 +13,7 @@ namespace MarketProcessor
         {
             _registeredMarketIndicators = new Dictionary<string, IMarketIndicator>
              {
-                 { "Reccurent Candle Indicator", new ReccurentCandleIndicator() }
+                 { "Recurrent Candle Indicator", new RecurrentCandleIndicator() }
              };
         }
     }
