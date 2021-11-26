@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MarketProcessor.Entities;
+using MarketProcessor.Enums;
 using MarketProcessor.MarketIndicators.Interfaces;
 
 namespace MarketProcessor
@@ -11,7 +12,7 @@ namespace MarketProcessor
         private IList<BaseIndicatorBlock> _candleSticks;
         private IMarketIndicator _marketIndicator;
 
-        internal IDictionary<string, IList<BaseIndicatorBlock>> ProcessedCandleSticks = new Dictionary<string, IList<BaseIndicatorBlock>>();
+        internal IDictionary<IndicatorType, IList<BaseIndicatorBlock>> ProcessedCandleSticks = new Dictionary<IndicatorType, IList<BaseIndicatorBlock>>();
 
         public void SelectMarketIndicator(IMarketIndicator marketIndicator)
         {
@@ -31,7 +32,7 @@ namespace MarketProcessor
                     nameof(_candleSticks));
 
             var processedCandleSticks = _marketIndicator.Process(_candleSticks);
-            ProcessedCandleSticks.Add(_marketIndicator.Name, processedCandleSticks);
+            ProcessedCandleSticks.Add(_marketIndicator.Type, processedCandleSticks);
         }
 
         public void LoadCandleStickCharts(IList<BaseIndicatorBlock> candleSticks)

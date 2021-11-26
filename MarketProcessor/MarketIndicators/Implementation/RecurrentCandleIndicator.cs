@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using MarketProcessor.Entities;
 using MarketProcessor.MarketIndicators.Interfaces;
 using AutoMapper;
+using MarketProcessor.Enums;
 
 [assembly: InternalsVisibleTo("MarketProcessor.Tests")]
 namespace MarketProcessor.MarketIndicators.Implementation
@@ -11,7 +12,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
     {
         private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, RecurrentIndicatorBlock>()));
 
-        public string Name => "Recurrent";
+        public IndicatorType Type => IndicatorType.RecurrentCandle;
 
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {

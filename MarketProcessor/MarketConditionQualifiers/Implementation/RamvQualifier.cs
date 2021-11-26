@@ -12,8 +12,13 @@ namespace MarketProcessor.MarketConditionQualifiers.Implementation
     // V - Volume
     public class RamvQualifier : IMarketConditionQualifier
     {
-        public MarketConditions GetCurrentMarketCondition(IDictionary<string, IList<BaseIndicatorBlock>> processedCandleStickCharts)
+        public MarketConditions GetCurrentMarketCondition(IDictionary<IndicatorType, IList<BaseIndicatorBlock>> processedCandleStickChartsDict)
         {
+            foreach (var processedCandleStickCharts in processedCandleStickChartsDict)
+            {
+                if (processedCandleStickCharts.Key == IndicatorType.RecurrentCandle) { }
+            }
+
             throw new NotImplementedException();
         }
     }
