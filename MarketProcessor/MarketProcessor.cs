@@ -1,48 +1,32 @@
-﻿using System;
+﻿using MarketProcessor.Entities;
+using MarketProcessor.Enums;
+using MarketProcessor.MarketConditionQualifiers.Interfaces;
+using System;
 using System.Collections.Generic;
-using MarketProcessor.Entities;
-using MarketProcessor.MarketIndicators.Interfaces;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MarketProcessor
 {
     public class MarketProcessor
     {
-        private IList<BaseIndicatorBlock> _candleSticks = new List<BaseIndicatorBlock>();
-        private IMarketIndicator _marketIndicator;
+        private MarketAnalyzer _analyzer = new MarketAnalyzer();
+        private IMarketConditionQualifier _marketConditionQualifier;
 
-        public IList<BaseIndicatorBlock> GetCandleStickCharts() => _candleSticks;
+        //public MarketConditions GetCurrentMarketCondition()
+        //{
 
-        public IDictionary<string, IMarketIndicator> GetRegisteredMarketIndicators() => StartUp.RegisteredMarketIndicators;
+        //}
 
-        public MarketProcessor()
+        public void LoadData(IList<BaseIndicatorBlock> data)
         {
-            StartUp.Init();
+            _analyzer.LoadCandleStickCharts(data);
         }
 
-        public void SelectMarketIndicator(IMarketIndicator marketIndicator)
+        public void SelectMarketConditionQualifier(IMarketConditionQualifier marketConditionQualifier)
         {
-            _marketIndicator = marketIndicator ?? throw new ArgumentNullException(nameof(marketIndicator),
-                    "Passed market indicator is null.");
-        }
-
-        public void Process()
-        {
-            if (_marketIndicator == null)
-                throw new ArgumentNullException(nameof(_marketIndicator), 
-                    "_marketIndicator is null. Select the market indicator before processing the data. " +
-                    "Use SelectMarketIndicator method to select the indicator.");
-
-            if (_candleSticks.Count == 0)
-                throw new ArgumentException("Number of candlesticks is 0, pass correct data",
-                    nameof(_candleSticks));
-
-            _marketIndicator.Process(_candleSticks);
-        }
-
-        public void LoadCandleStickCharts(IList<BaseIndicatorBlock> candleSticks)
-        {
-            _candleSticks = candleSticks ?? throw new ArgumentNullException(nameof(candleSticks),
-                    "Passed candlesticks data is null.");
+            _marketConditionQualifier = marketConditionQualifier;
         }
     }
 }
