@@ -12,7 +12,7 @@ namespace MarketProcessor.MarketConditionQualifiers.Implementation
     // V - Volume
     public class RamvQualifier : IMarketConditionQualifier
     {
-        public MarketConditions GetCurrentMarketCondition(IList<BaseIndicatorBlock> candleStickCharts)
+        public MarketConditions GetCurrentMarketCondition(IDictionary<string, IList<BaseIndicatorBlock>> processedCandleStickCharts)
         {
             throw new NotImplementedException();
         }

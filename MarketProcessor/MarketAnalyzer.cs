@@ -8,17 +8,10 @@ namespace MarketProcessor
 {
     public class MarketAnalyzer
     {
-        private IList<BaseIndicatorBlock> _candleSticks = new List<BaseIndicatorBlock>();
+        private IList<BaseIndicatorBlock> _candleSticks;
         private IMarketIndicator _marketIndicator;
 
-        internal Dictionary<string, IMarketIndicator> GetRegisteredMarketIndicators => StartUp.RegisteredMarketIndicators;
-
         internal IDictionary<string, IList<BaseIndicatorBlock>> ProcessedCandleSticks = new Dictionary<string, IList<BaseIndicatorBlock>>();
-
-        public MarketAnalyzer()
-        {
-            StartUp.Init();
-        }
 
         public void SelectMarketIndicator(IMarketIndicator marketIndicator)
         {
@@ -38,7 +31,7 @@ namespace MarketProcessor
                     nameof(_candleSticks));
 
             var processedCandleSticks = _marketIndicator.Process(_candleSticks);
-            var indicatorName = StartUp.RegisteredMarketIndicators
+            var indicatorName = Register.MarketIndicators
                 .Where(i => i.Value.GetType() == _marketIndicator.GetType())
                 .FirstOrDefault().Key;
             ProcessedCandleSticks.Add(indicatorName, processedCandleSticks);
