@@ -11,6 +11,8 @@ namespace MarketProcessor.MarketIndicators.Implementation
     {
         private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, RecurrentIndicatorBlock>()));
 
+        public string Name => "Recurrent";
+
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {
 
@@ -42,6 +44,6 @@ namespace MarketProcessor.MarketIndicators.Implementation
             }
 
             return processedCandleSticks.ConvertAll(i => (BaseIndicatorBlock)i);
-        }
+        }      
     }
 }

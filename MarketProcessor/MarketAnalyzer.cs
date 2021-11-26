@@ -31,10 +31,7 @@ namespace MarketProcessor
                     nameof(_candleSticks));
 
             var processedCandleSticks = _marketIndicator.Process(_candleSticks);
-            var indicatorName = Register.MarketIndicators
-                .Where(i => i.Value.GetType() == _marketIndicator.GetType())
-                .FirstOrDefault().Key;
-            ProcessedCandleSticks.Add(indicatorName, processedCandleSticks);
+            ProcessedCandleSticks.Add(_marketIndicator.Name, processedCandleSticks);
         }
 
         public void LoadCandleStickCharts(IList<BaseIndicatorBlock> candleSticks)
