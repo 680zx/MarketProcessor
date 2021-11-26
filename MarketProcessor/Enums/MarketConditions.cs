@@ -5,6 +5,7 @@ namespace MarketProcessor.Enums
     {
         Bull,
         Bear,
-        Flat
+        Flat,
+        Undefined
     }
 }
