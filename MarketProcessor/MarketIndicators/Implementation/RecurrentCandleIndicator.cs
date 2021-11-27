@@ -16,7 +16,6 @@ namespace MarketProcessor.MarketIndicators.Implementation
 
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {
-
             List<RecurrentIndicatorBlock> processedCandleSticks = (List<RecurrentIndicatorBlock>)_mapper
                 .Map<IList<BaseIndicatorBlock>, IList<RecurrentIndicatorBlock>>(candleSticks);
 
