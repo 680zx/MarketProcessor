@@ -1,8 +1,8 @@
-﻿
-namespace MarketProcessor.Entities
+﻿namespace MarketProcessor.Entities
 {
     public class CandleStickChart
     {
+        public int Id { get; set; }
         public double HighPrice { get; set; }
         public double LowPrice { get; set; }
         public double OpenPrice { get; set; }

@@ -15,7 +15,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
 
         public IndicatorType Type => IndicatorType.MA;
 
-        public MaIndicator(double alphaRate)
+        public MaIndicator(double alphaRate = 0.5)
         {
             _alphaRate = alphaRate;
         }
@@ -26,15 +26,31 @@ namespace MarketProcessor.MarketIndicators.Implementation
                 .Map<IList<BaseIndicatorBlock>, IList<MaIndicatorBlock>>(candleSticks);
 
             // The first EMA value is usually equal to the price of the first value on the candlestick chart
-            processedCandleSticks[0].EMA = processedCandleSticks[0].CandleStickChart.ClosePrice;
+            processedCandleSticks[0].EmaValue = processedCandleSticks[0].CandleStickChart.ClosePrice;
 
             for (int currentItemIndex = 1; currentItemIndex < processedCandleSticks.Count; currentItemIndex++)
             {
-                processedCandleSticks[currentItemIndex].EMA = _alphaRate * processedCandleSticks[currentItemIndex].CandleStickChart.ClosePrice +
-                        (1 - _alphaRate) * processedCandleSticks[currentItemIndex - 1].EMA;
+                processedCandleSticks[currentItemIndex].EmaValue = _alphaRate * processedCandleSticks[currentItemIndex].CandleStickChart.ClosePrice +
+                        (1 - _alphaRate) * processedCandleSticks[currentItemIndex - 1].EmaValue;
             }
 
             return processedCandleSticks.ConvertAll(i => (BaseIndicatorBlock)i);
+        }
+
+        public IList<MaIndicatorBlock> ProcessWithMaIndicatorBlock(IList<BaseIndicatorBlock> candleSticks)
+        {
+            List<MaIndicatorBlock> processedCandleSticks = (List<MaIndicatorBlock>)_mapper
+                .Map<IList<BaseIndicatorBlock>, IList<MaIndicatorBlock>>(candleSticks);
+
+            processedCandleSticks[0].EmaValue = processedCandleSticks[0].CandleStickChart.ClosePrice;
+
+            for (int currentItemIndex = 1; currentItemIndex < processedCandleSticks.Count; currentItemIndex++)
+            {
+                processedCandleSticks[currentItemIndex].EmaValue = _alphaRate * processedCandleSticks[currentItemIndex].CandleStickChart.ClosePrice +
+                        (1 - _alphaRate) * processedCandleSticks[currentItemIndex - 1].EmaValue;
+            }
+
+            return processedCandleSticks;
         }
     }
 }

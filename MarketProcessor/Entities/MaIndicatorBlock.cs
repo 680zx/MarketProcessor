@@ -2,6 +2,6 @@
 {
     public class MaIndicatorBlock : BaseIndicatorBlock
     {
-        public double EMA { get; set; }
+        public double EmaValue { get; set; }
     }
 }

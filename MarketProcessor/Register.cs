@@ -9,7 +9,8 @@ namespace MarketProcessor
     {
         private static Dictionary<IndicatorType, IMarketIndicator> _marketIndicators = new Dictionary<IndicatorType, IMarketIndicator>
         {
-            { IndicatorType.RecurrentCandle, new RecurrentCandleIndicator() }
+            { IndicatorType.RecurrentCandle, new RecurrentCandleIndicator() },
+            { IndicatorType.MA, new MaIndicator() }
         };
 
         internal static Dictionary<IndicatorType, IMarketIndicator> MarketIndicators => _marketIndicators;
