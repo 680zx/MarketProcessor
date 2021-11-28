@@ -5,6 +5,7 @@
         RecurrentCandle,
         AnomalySearch,
         MACD,
+        MA,
         VolumeChecker
     }
 }

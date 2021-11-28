@@ -2,26 +2,19 @@
 using MarketProcessor.Entities;
 using MarketProcessor.Enums;
 using MarketProcessor.MarketIndicators.Interfaces;
+using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-[assembly: InternalsVisibleTo("MarketProcessor.Tests")]
 namespace MarketProcessor.MarketIndicators.Implementation
 {
-    // MACD = EMA_short(Price) - EMA_long(Price), where
-    // EMA_t = alpha * Price_t + (1 - alpha) * EMA_(t-1),
-    // where t - value of price at a particular point
-    internal class MacdIndicator : IMarketIndicator
+    internal class MaIndicator : IMarketIndicator
     {
         private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, RecurrentIndicatorBlock>()));
-        private double _alphaRate;
 
-        public IndicatorType Type => IndicatorType.MACD;
-
-        public MacdIndicator(double alphaRate)
-        {
-            _alphaRate = alphaRate;
-        }
+        public IndicatorType Type => IndicatorType.MA;
 
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {
