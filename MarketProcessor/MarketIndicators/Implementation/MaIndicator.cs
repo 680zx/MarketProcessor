@@ -3,7 +3,9 @@ using MarketProcessor.Entities;
 using MarketProcessor.Enums;
 using MarketProcessor.MarketIndicators.Interfaces;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("MarketProcessor.Tests")]
 namespace MarketProcessor.MarketIndicators.Implementation
 {
     // EMA_t = alpha * Price_t + (1 - alpha) * EMA_(t-1),
@@ -37,6 +39,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
             return processedCandleSticks.ConvertAll(i => (BaseIndicatorBlock)i);
         }
 
+        // Same as Process() method, but it returns the list of Ma Indicator Blocks
         public IList<MaIndicatorBlock> ProcessWithMaIndicatorBlock(IList<BaseIndicatorBlock> candleSticks)
         {
             List<MaIndicatorBlock> processedCandleSticks = (List<MaIndicatorBlock>)_mapper
