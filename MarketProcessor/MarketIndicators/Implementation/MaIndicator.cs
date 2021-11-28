@@ -18,8 +18,8 @@ namespace MarketProcessor.MarketIndicators.Implementation
 
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {
-            List<MacdIndicatorBlock> processedCandleSticks = (List<MacdIndicatorBlock>)_mapper
-                .Map<IList<BaseIndicatorBlock>, IList<MacdIndicatorBlock>>(candleSticks);
+            List<MaIndicatorBlock> processedCandleSticks = (List<MaIndicatorBlock>)_mapper
+                .Map<IList<BaseIndicatorBlock>, IList<MaIndicatorBlock>>(candleSticks);
 
             for (int currentItemIndex = 0; currentItemIndex < processedCandleSticks.Count; currentItemIndex++)
             {
