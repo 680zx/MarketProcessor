@@ -9,18 +9,15 @@ using System.Runtime.CompilerServices;
 namespace MarketProcessor.MarketIndicators.Implementation
 {
     // MACD = EMA_short(Price) - EMA_long(Price), where
-    // EMA_t = alpha * Price_t + (1 - alpha) * EMA_(t-1),
-    // where t - value of price at a particular point
+    // EMA - MA Indicator
     internal class MacdIndicator : IMarketIndicator
     {
         private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, RecurrentIndicatorBlock>()));
-        private double _alphaRate;
 
         public IndicatorType Type => IndicatorType.MACD;
 
-        public MacdIndicator(double alphaRate)
+        public MacdIndicator()
         {
-            _alphaRate = alphaRate;
         }
 
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)

@@ -2,28 +2,36 @@
 using MarketProcessor.Entities;
 using MarketProcessor.Enums;
 using MarketProcessor.MarketIndicators.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarketProcessor.MarketIndicators.Implementation
 {
+    // EMA_t = alpha * Price_t + (1 - alpha) * EMA_(t-1),
+    // where t - value of price at a particular point
     internal class MaIndicator : IMarketIndicator
     {
         private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, RecurrentIndicatorBlock>()));
+        private double _alphaRate;
 
         public IndicatorType Type => IndicatorType.MA;
+
+        public MaIndicator(double alphaRate)
+        {
+            _alphaRate = alphaRate;
+        }
 
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {
             List<MaIndicatorBlock> processedCandleSticks = (List<MaIndicatorBlock>)_mapper
                 .Map<IList<BaseIndicatorBlock>, IList<MaIndicatorBlock>>(candleSticks);
 
-            for (int currentItemIndex = 0; currentItemIndex < processedCandleSticks.Count; currentItemIndex++)
-            {
+            // The first EMA value is usually equal to the price of the first value on the candlestick chart
+            processedCandleSticks[0].EMA = processedCandleSticks[0].CandleStickChart.ClosePrice;
 
+            for (int currentItemIndex = 1; currentItemIndex < processedCandleSticks.Count; currentItemIndex++)
+            {
+                processedCandleSticks[currentItemIndex].EMA = _alphaRate * processedCandleSticks[currentItemIndex].CandleStickChart.ClosePrice +
+                        (1 - _alphaRate) * processedCandleSticks[currentItemIndex - 1].EMA;
             }
 
             return processedCandleSticks.ConvertAll(i => (BaseIndicatorBlock)i);
