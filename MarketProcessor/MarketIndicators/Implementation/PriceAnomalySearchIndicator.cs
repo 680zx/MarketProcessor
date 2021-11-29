@@ -1,12 +1,18 @@
-﻿using System;
+﻿using MarketProcessor.Entities;
+using MarketProcessor.Enums;
+using MarketProcessor.MarketIndicators.Interfaces;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarketProcessor.MarketIndicators.Implementation
 {
-    internal class PriceAnomalySearchIndicator
+    internal class PriceAnomalySearchIndicator : IMarketIndicator
     {
+        public IndicatorType Type => IndicatorType.PriceAnomalySearcher;
+
+        public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
