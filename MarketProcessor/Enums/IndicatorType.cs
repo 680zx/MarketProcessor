@@ -3,9 +3,9 @@
     public enum IndicatorType
     {
         RecurrentCandle,
-        AnomalySearch,
         MACD,
         MA,
-        VolumeChecker
+        PriceAnomalySearcher,
+        LowVolumeSearcher
     }
 }
