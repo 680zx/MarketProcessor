@@ -3,6 +3,6 @@
     public class VolumeIndicatorBlock : BaseIndicatorBlock
     {
         public double CandleStickVolume { get; set; }
-        public bool IsVolumeAnomaly { get; set; }
+        public bool IsLowVolume { get; set; }
     }
 }
