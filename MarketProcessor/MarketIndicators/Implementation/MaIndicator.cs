@@ -15,11 +15,17 @@ namespace MarketProcessor.MarketIndicators.Implementation
         private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, RecurrentIndicatorBlock>()));
         private double _alphaRate;
 
+        public double AlphaRate 
+        { 
+            get { return _alphaRate; } 
+            set { _alphaRate = value; }
+        }
+
         public IndicatorType Type => IndicatorType.MA;
 
-        public MaIndicator(double alphaRate = 0.5)
+        public MaIndicator(int period = 12)
         {
-            _alphaRate = alphaRate;
+            _alphaRate = 2 / (period + 1);
         }
 
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
