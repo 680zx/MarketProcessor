@@ -16,7 +16,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
         // assume that we want to find the local maximum for the last 
         // 24 hours than the candlestick window period equals 24
         private int _candleStickWindowPeriod;
-        private double _avgMaxVolumeDifference;
+        private double _maxToAvgVolumeDifference;
 
         public int CandleStickWindowPeriod
         {
@@ -24,18 +24,18 @@ namespace MarketProcessor.MarketIndicators.Implementation
             set { _candleStickWindowPeriod = value;}
         }
 
-        public double AvgMaxVolumeDifference
+        public double MaxToAvgVolumeDifference
         {
-            get { return _avgMaxVolumeDifference; }
-            set { _avgMaxVolumeDifference = value; }
+            get { return _maxToAvgVolumeDifference; }
+            set { _maxToAvgVolumeDifference = value; }
         }
 
         public IndicatorType Type => IndicatorType.LowVolumeSearcher;
 
-        public LowVolumeSearchIndicator(int candleStickWindowPeriod = 24, double avgMaxVolumeDifference = 3)
+        public LowVolumeSearchIndicator(int candleStickWindowPeriod = 24, double maxToAvgVolumeDifference = 3)
         {
             _candleStickWindowPeriod = candleStickWindowPeriod;
-            _avgMaxVolumeDifference = avgMaxVolumeDifference;
+            _maxToAvgVolumeDifference = maxToAvgVolumeDifference;
         }
 
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
@@ -50,7 +50,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
                 .FirstOrDefault().CandleStickChartId;
             var AvgCandleStickVolume = processedCandleSticks.Average(i => i.CandleStickVolume);
 
-            if (MaxCandleStickVolume / AvgCandleStickVolume > AvgMaxVolumeDifference)
+            if (MaxCandleStickVolume / AvgCandleStickVolume > _maxToAvgVolumeDifference)
             {
 
             }
