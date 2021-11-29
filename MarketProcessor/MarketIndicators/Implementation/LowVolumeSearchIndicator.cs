@@ -9,7 +9,6 @@ namespace MarketProcessor.MarketIndicators.Implementation
 {
     internal class LowVolumeSearchIndicator : IMarketIndicator
     {
-        private const double LOW_COEFFICIENT_VOLUME_BORDER = 0.8;
         private const double HIGH_COEFFICIENT_VOLUME_BORDER = 1.2;
         private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, VolumeIndicatorBlock>()));
         private double _maxToAvgVolumeDifference;
@@ -56,8 +55,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
 
                 // TakeLast expression is used to discard items prior to the item with the maximum volume
                 var containsOnlyLowVolumeCandleSticks = processedCandleSticks.TakeLast(processedCandleSticks.Count - maxVolumeItemIndex - 1)
-                    .All(i => i.CandleStickVolume >= LOW_COEFFICIENT_VOLUME_BORDER * avgCandleStickVolume &&
-                    i.CandleStickVolume <= HIGH_COEFFICIENT_VOLUME_BORDER * avgCandleStickVolume);
+                    .All(i => i.CandleStickVolume <= HIGH_COEFFICIENT_VOLUME_BORDER * avgCandleStickVolume);
 
                 if (containsOnlyLowVolumeCandleSticks)
                 {
