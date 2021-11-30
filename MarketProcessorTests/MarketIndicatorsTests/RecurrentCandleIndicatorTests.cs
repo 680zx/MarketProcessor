@@ -2,6 +2,8 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using MarketProcessor.Entities;
 using MarketProcessor.MarketIndicators.Implementation;
+using MarketProcessor.MarketIndicators.Interfaces;
+using System;
 
 namespace MarketProcessor.Tests.MarketIndicatorsTests
 {
@@ -49,33 +51,44 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
             new RecurrentIndicatorBlock { CandleStickChart = new CandleStickChart { LowPrice = 55691.00, HighPrice = 56416.84 } }
         };
 
+        private IMarketIndicator _candleIndicator = new RecurrentCandleIndicator();
+
         [Test]
         public void Process_SimpleValuesList_TestedAndDesiredListsAreEqual()
         {
-            // Arrange
-            var candleIndicator = new RecurrentCandleIndicator();
-
             // Act
-            var processedCandlerSticks = candleIndicator.Process(_testedCandleSticks);
+            var processedCandlerSticks = _candleIndicator.Process(_testedCandleSticks);
 
             // Assert
             Assert.IsTrue(AreListsEqual(processedCandlerSticks, _desiredOutputList));
         }
 
+        [Test]
+        public void Process_EmptyList_ExceptionThrown()
+        {
+            // Arrange
+            var emptyList = new List<BaseIndicatorBlock>();
+
+            // Act
+            // Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _candleIndicator.Process(emptyList);
+            });
+        }
+
         private static bool AreListsEqual(IList<BaseIndicatorBlock> list1, IList<BaseIndicatorBlock> list2)
         {
-            var isEqual = true;
             for (int i = 0; i < list1.Count; i++)
             {
                 if (((RecurrentIndicatorBlock)list1[i]).IsSupport != ((RecurrentIndicatorBlock)list2[i]).IsSupport ||
                     ((RecurrentIndicatorBlock)list1[i]).IsResistance != ((RecurrentIndicatorBlock)list2[i]).IsResistance)
                 {
-                    isEqual = false;
-                    break;
+                    return false;
                 }
             }
 
-            return isEqual;
+            return true;
         }
     }
 }

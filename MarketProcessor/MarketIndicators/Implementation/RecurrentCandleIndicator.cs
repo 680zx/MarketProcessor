@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using MarketProcessor.Entities;
 using MarketProcessor.MarketIndicators.Interfaces;
@@ -16,6 +17,9 @@ namespace MarketProcessor.MarketIndicators.Implementation
 
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {
+            if (candleSticks == null || candleSticks.Count == 0)
+                throw new ArgumentOutOfRangeException("Check the passed list of candlesticks. It's null or empty.");
+
             List<RecurrentIndicatorBlock> processedCandleSticks = (List<RecurrentIndicatorBlock>)_mapper
                 .Map<IList<BaseIndicatorBlock>, IList<RecurrentIndicatorBlock>>(candleSticks);
 
