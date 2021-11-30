@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("MarketProcessor.Tests")]
 namespace MarketProcessor.MarketIndicators.Implementation
 {
-    internal class MacdIndicator : IMarketIndicator
+    internal class MacdIndicator : IMarketIndicator<MacdIndicatorBlock>
     {
         private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, RecurrentIndicatorBlock>()));
         private MaIndicator _shortPeriodMaIndicator;
@@ -25,14 +25,14 @@ namespace MarketProcessor.MarketIndicators.Implementation
             _smoothMaIndicator = smoothMaIndicator;
         }
 
-        public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
+        public IList<MacdIndicatorBlock> Process(IList<MacdIndicatorBlock> candleSticks)
         {
-            List<MacdIndicatorBlock> processedCandleSticks = (List<MacdIndicatorBlock>)_mapper
-                .Map<IList<BaseIndicatorBlock>, IList<MacdIndicatorBlock>>(candleSticks);
+            List<MacdIndicatorBlock> processedCandleSticks = (List<MacdIndicatorBlock>)(candleSticks);
 
-            IList<MaIndicatorBlock> shortPeriodMaProcessedCandleSticks = _shortPeriodMaIndicator.ProcessWithMaIndicatorBlock(candleSticks);
-            IList<MaIndicatorBlock> longPeriodMaProcessedCandleSticks = _longPeriodMaIndicator.ProcessWithMaIndicatorBlock(candleSticks);
-            IList<MaIndicatorBlock> smoothMaProcessedCandleSticks = _smoothMaIndicator.ProcessWithMaIndicatorBlock(candleSticks);
+            var maProcessedCandleSticks = ((List<BaseIndicatorBlock>)candleSticks).ConvertAll(i => (MaIndicatorBlock)i);
+            IList<MaIndicatorBlock> shortPeriodMaProcessedCandleSticks = _shortPeriodMaIndicator.ProcessWithMaIndicatorBlock(maProcessedCandleSticks);
+            IList<MaIndicatorBlock> longPeriodMaProcessedCandleSticks = _longPeriodMaIndicator.ProcessWithMaIndicatorBlock(maProcessedCandleSticks);
+            IList<MaIndicatorBlock> smoothMaProcessedCandleSticks = _smoothMaIndicator.ProcessWithMaIndicatorBlock(maProcessedCandleSticks);
 
             for (int currentItemIndex = 0; currentItemIndex < processedCandleSticks.Count; currentItemIndex++)
             {
@@ -50,7 +50,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
                     processedCandleSticks[currentItemIndex].SignalMacdValue;
             }
 
-            return processedCandleSticks.ConvertAll(i => (BaseIndicatorBlock)i);
+            return processedCandleSticks;
         }
     }
 }

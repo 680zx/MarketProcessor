@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace MarketProcessor.MarketIndicators.Implementation
 {
-    internal class PriceAnomalySearchIndicator : IMarketIndicator
+    internal class PriceAnomalySearchIndicator : IMarketIndicator<PriceIndicatorBlock>
     {
         private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, VolumeIndicatorBlock>()));
         private double _lowPriceBorderCoefficient;
@@ -19,10 +19,9 @@ namespace MarketProcessor.MarketIndicators.Implementation
             _lowPriceBorderCoefficient = lowPriceBorderCoefficient;
         }
         
-        public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
+        public IList<PriceIndicatorBlock> Process(IList<PriceIndicatorBlock> candleSticks)
         {
-            List<PriceIndicatorBlock> processedCandleSticks = (List<PriceIndicatorBlock>)_mapper
-                .Map<IList<BaseIndicatorBlock>, IList<PriceIndicatorBlock>>(candleSticks);
+            List<PriceIndicatorBlock> processedCandleSticks = (List<PriceIndicatorBlock>)candleSticks;
 
             var maxCandleStickRealBodyValue = processedCandleSticks.Max(i => i.CandleStickChart.RealBody);
             var maxCandleStickRealBodyItem = processedCandleSticks
@@ -37,7 +36,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
                 processedCandleSticks[maxCandleStickRealBodyIndex].IsAnomaly = true;
             }
 
-            return processedCandleSticks.ConvertAll(i => (BaseIndicatorBlock)i);
+            return processedCandleSticks;
         }
     }
 }

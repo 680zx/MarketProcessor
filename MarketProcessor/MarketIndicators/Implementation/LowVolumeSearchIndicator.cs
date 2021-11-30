@@ -7,9 +7,8 @@ using System.Linq;
 
 namespace MarketProcessor.MarketIndicators.Implementation
 {
-    internal class LowVolumeSearchIndicator : IMarketIndicator
+    internal class LowVolumeSearchIndicator : IMarketIndicator<VolumeIndicatorBlock>
     {
-        private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, VolumeIndicatorBlock>()));
         private double _maxToAvgVolumeDifference;
         private double _highVolumeBorderCoefficient;
 
@@ -21,17 +20,15 @@ namespace MarketProcessor.MarketIndicators.Implementation
 
         public IndicatorType Type => IndicatorType.LowVolumeSearcher;
 
-        public LowVolumeSearchIndicator(double maxToAvgVolumeDifference = 3, double highVolumeBorderCoefficient = 1.2)
+        public LowVolumeSearchIndicator(double maxToAvgVolumeDifference = 3, double highVolumeBorderCoefficient = 3)
         {
             _maxToAvgVolumeDifference = maxToAvgVolumeDifference;
             _highVolumeBorderCoefficient = highVolumeBorderCoefficient;
         }
 
-        public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
+        public IList<VolumeIndicatorBlock> Process(IList<VolumeIndicatorBlock> candleSticks)
         {
-            List<VolumeIndicatorBlock> processedCandleSticks = (List<VolumeIndicatorBlock>)_mapper
-                .Map<IList<BaseIndicatorBlock>, IList<VolumeIndicatorBlock>>(candleSticks);
-
+            List<VolumeIndicatorBlock> processedCandleSticks = (List<VolumeIndicatorBlock>)candleSticks;
             var maxCandleStickVolume = processedCandleSticks.Max(i => i.CandleStickVolume);
             var maxVolumeCandleStick = processedCandleSticks.Where(i => i.CandleStickVolume == maxCandleStickVolume)
                 .FirstOrDefault();
@@ -65,7 +62,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
                 }
             }
 
-            return processedCandleSticks.ConvertAll(i => (BaseIndicatorBlock)i);
+            return processedCandleSticks;
         }
     }
 }

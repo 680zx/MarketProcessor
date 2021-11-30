@@ -9,14 +9,13 @@ namespace MarketProcessor
     public class MarketAnalyzer
     {
         private IList<BaseIndicatorBlock> _candleSticks;
-        private IMarketIndicator _marketIndicator;
+        private IMarketIndicator<BaseIndicatorBlock> _marketIndicator;
 
         internal IDictionary<IndicatorType, IList<BaseIndicatorBlock>> ProcessedCandleSticks = new Dictionary<IndicatorType, IList<BaseIndicatorBlock>>();
 
-        public void SelectMarketIndicator(IMarketIndicator marketIndicator)
+        public void SelectMarketIndicator(IMarketIndicator<BaseIndicatorBlock> marketIndicator)
         {
-            _marketIndicator = marketIndicator ?? throw new ArgumentNullException(nameof(marketIndicator),
-                    "Passed market indicator is null.");
+            _marketIndicator = (IMarketIndicator<BaseIndicatorBlock>)(marketIndicator as BaseIndicatorBlock ?? throw new ArgumentNullException("Passed market indicator is null."));
         }
 
         public void Process()

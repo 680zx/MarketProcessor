@@ -9,19 +9,18 @@ using MarketProcessor.Enums;
 [assembly: InternalsVisibleTo("MarketProcessor.Tests")]
 namespace MarketProcessor.MarketIndicators.Implementation
 {
-    internal class RecurrentCandleIndicator : IMarketIndicator
+    internal class RecurrentCandleIndicator : IMarketIndicator<RecurrentIndicatorBlock>
     {
         private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, RecurrentIndicatorBlock>()));
 
         public IndicatorType Type => IndicatorType.RecurrentCandle;
 
-        public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
+        public IList<RecurrentIndicatorBlock> Process(IList<RecurrentIndicatorBlock> candleSticks)
         {
             if (candleSticks == null || candleSticks.Count == 0)
                 throw new ArgumentOutOfRangeException("Check the passed list of candlesticks. It's null or empty.");
 
-            List<RecurrentIndicatorBlock> processedCandleSticks = (List<RecurrentIndicatorBlock>)_mapper
-                .Map<IList<BaseIndicatorBlock>, IList<RecurrentIndicatorBlock>>(candleSticks);
+            List<RecurrentIndicatorBlock> processedCandleSticks = (List<RecurrentIndicatorBlock>)candleSticks;
 
             // The indexer starts from 2 because we have to compare current candle value 
             // with two previous values. The comparing window includes 5 neighbour candles,
@@ -47,7 +46,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
                 }
             }
 
-            return processedCandleSticks.ConvertAll(i => (BaseIndicatorBlock)i);
+            return processedCandleSticks;
         }      
     }
 }
