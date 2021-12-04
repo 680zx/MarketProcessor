@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MarketProcessor.Entities;
+﻿using MarketProcessor.Entities;
 using MarketProcessor.Enums;
 using MarketProcessor.MarketIndicators.Interfaces;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
     internal class LowVolumeSearchIndicator : IMarketIndicator<VolumeIndicatorBlock>
     {
         private double _maxToAvgVolumeDifference;
-        private double _highVolumeBorderCoefficient;
+        private double _maxToLowVolumeDiference;
 
         public double MaxToAvgVolumeDifference
         {
@@ -20,10 +19,10 @@ namespace MarketProcessor.MarketIndicators.Implementation
 
         public IndicatorType Type => IndicatorType.LowVolumeSearcher;
 
-        public LowVolumeSearchIndicator(double maxToAvgVolumeDifference = 3, double highVolumeBorderCoefficient = 3)
+        public LowVolumeSearchIndicator(double maxToAvgVolumeDifference = 3, double maxToLowVolumdeDiference = 5)
         {
             _maxToAvgVolumeDifference = maxToAvgVolumeDifference;
-            _highVolumeBorderCoefficient = highVolumeBorderCoefficient;
+            _maxToLowVolumeDiference = maxToLowVolumdeDiference;
         }
 
         public IList<VolumeIndicatorBlock> Process(IList<VolumeIndicatorBlock> candleSticks)
@@ -38,27 +37,15 @@ namespace MarketProcessor.MarketIndicators.Implementation
             if (maxCandleStickVolume / avgCandleStickVolume > _maxToAvgVolumeDifference &&
                 maxVolumeItemIndex != processedCandleSticks.Count - 1) // check that max volume item is not last
             {
-                #region old code
-                //for (int currentItemIndex = maxVolumeItemIndex + 1; currentItemIndex < processedCandleSticks.Count; currentItemIndex++)
-                //{
-                //    // if candlestick volume is between 0.8 * average_volume and 1.2 * average_volume
-                //    // than it's in a valid range of values
-                //    if (processedCandleSticks[currentItemIndex].CandleStickVolume >= LOW_COEFFICIENT_VOLUME_BORDER * avgCandleStickVolume &&
-                //        processedCandleSticks[currentItemIndex].CandleStickVolume <= HIGH_COEFFICIENT_VOLUME_BORDER * avgCandleStickVolume)
-                //    {
-                //        processedCandleSticks[currentItemIndex].IsLowVolume = true;
-                //    }
-                //}
-                #endregion
-
-                // TakeLast expression is used to discard items prior to the item with the maximum volume
-                var containsOnlyLowVolumeCandleSticks = processedCandleSticks.TakeLast(processedCandleSticks.Count - maxVolumeItemIndex - 1)
-                    .All(i => i.CandleStickVolume <= _highVolumeBorderCoefficient * avgCandleStickVolume);
-
-                if (containsOnlyLowVolumeCandleSticks)
+                for (int index = maxVolumeItemIndex + 1; index < processedCandleSticks.Count; index++)
                 {
-                    for (int i = maxVolumeItemIndex; i < processedCandleSticks.Count; i++)
-                        processedCandleSticks[i].IsLowVolume = true;                    
+                    var containsOnlyLowVolumeCandleSticks = processedCandleSticks.TakeLast(processedCandleSticks.Count - index)
+                        .All(i => i.CandleStickVolume <= maxCandleStickVolume / _maxToLowVolumeDiference);
+                    if (containsOnlyLowVolumeCandleSticks)
+                    {
+                        for (int i = index; i < processedCandleSticks.Count; i++)
+                            processedCandleSticks[i].IsLowVolume = true;
+                    }
                 }
             }
 

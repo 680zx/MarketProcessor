@@ -1,13 +1,8 @@
-﻿using AutoMapper;
-using MarketProcessor.Entities;
+﻿using MarketProcessor.Entities;
 using MarketProcessor.MarketIndicators.Implementation;
 using MarketProcessor.MarketIndicators.Interfaces;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarketProcessor.Tests.MarketIndicatorsTests
 {
@@ -54,7 +49,7 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
             new VolumeIndicatorBlock { CandleStickVolume = 303.158 },
             new VolumeIndicatorBlock { CandleStickVolume = 267.636 },
             new VolumeIndicatorBlock { CandleStickVolume = 148.427 },
-            new VolumeIndicatorBlock { CandleStickVolume = 174.081 },
+            new VolumeIndicatorBlock { CandleStickVolume = 174.081 }, 
             new VolumeIndicatorBlock { CandleStickVolume = 103.525, IsLowVolume = true },
             new VolumeIndicatorBlock { CandleStickVolume = 105.516, IsLowVolume = true },
             new VolumeIndicatorBlock { CandleStickVolume = 82.902, IsLowVolume = true },
@@ -85,14 +80,9 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
         private static bool AreListsEqual(IList<VolumeIndicatorBlock> list1, IList<VolumeIndicatorBlock> list2)
         {
             for (int i = 0; i < list1.Count; i++)
-            {
-                Console.WriteLine($"list1[{i}]: {((VolumeIndicatorBlock)list1[i]).IsLowVolume}\t" +
-                    $"list2[{i}]: {((VolumeIndicatorBlock)list2[i]).IsLowVolume}");
-                if (((VolumeIndicatorBlock)list1[i]).IsLowVolume != ((VolumeIndicatorBlock)list2[i]).IsLowVolume ||
-                    ((VolumeIndicatorBlock)list1[i]).IsLowVolume != ((VolumeIndicatorBlock)list2[i]).IsLowVolume)
-                {
+            {              
+                if (list1[i].IsLowVolume != list2[i].IsLowVolume || list1[i].IsLowVolume != list2[i].IsLowVolume)               
                     return false;
-                }
             }
 
             return true;
