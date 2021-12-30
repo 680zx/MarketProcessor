@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MarketProcessor.Entities;
+﻿using MarketProcessor.Entities;
 using MarketProcessor.MarketIndicators.Implementation;
 using MarketProcessor.MarketIndicators.Interfaces;
 using NUnit.Framework;
