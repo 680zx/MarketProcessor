@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace MarketProcessor.MarketIndicators.Interfaces
 {
-    public interface IMarketIndicator<T> //where T : BaseIndicatorBlock
+    public interface IMarketIndicator
     {
-        public IList<T> Process(IList<T> candleSticks);
+        public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks);
         public IndicatorType Type { get; } 
     }
 }

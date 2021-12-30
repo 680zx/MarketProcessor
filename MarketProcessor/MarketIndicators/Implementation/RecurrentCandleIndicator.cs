@@ -3,26 +3,24 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using MarketProcessor.Entities;
 using MarketProcessor.MarketIndicators.Interfaces;
-using AutoMapper;
 using MarketProcessor.Enums;
+using System.Linq;
 
 [assembly: InternalsVisibleTo("MarketProcessor.Tests")]
 namespace MarketProcessor.MarketIndicators.Implementation
 {
-    internal class RecurrentCandleIndicator : IMarketIndicator<RecurrentIndicatorBlock>
+    internal class RecurrentCandleIndicator : IMarketIndicator
     {
-        private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, RecurrentIndicatorBlock>()));
-
         public IndicatorType Type => IndicatorType.RecurrentCandle;
 
-        public IList<RecurrentIndicatorBlock> Process(IList<RecurrentIndicatorBlock> candleSticks)
+        public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {
             if (candleSticks == null || candleSticks.Count == 0)
                 throw new ArgumentOutOfRangeException("Check the passed list of candlesticks. It's null or empty.");
 
-            List<RecurrentIndicatorBlock> processedCandleSticks = (List<RecurrentIndicatorBlock>)candleSticks;
+            List<RecurrentIndicatorBlock> processedCandleSticks = candleSticks.Cast<RecurrentIndicatorBlock>().ToList();
 
-            // The indexer starts from 2 because we have to compare current candle value 
+            // The index starts from 2 because we have to compare current candle value 
             // with two previous values. The comparing window includes 5 neighbour candles,
             // where current is the middle one.
             for (int i = 2; i < processedCandleSticks.Count - 2; i++)
@@ -46,7 +44,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
                 }
             }
 
-            return processedCandleSticks;
+            return processedCandleSticks.Cast<BaseIndicatorBlock>().ToList();
         }      
     }
 }

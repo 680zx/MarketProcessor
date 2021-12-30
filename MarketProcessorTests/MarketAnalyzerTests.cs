@@ -3,16 +3,13 @@ using MarketProcessor.Entities;
 using MarketProcessor.MarketIndicators.Implementation;
 using MarketProcessor.MarketIndicators.Interfaces;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarketProcessor.Tests
 {
     [TestFixture]
-    internal class Class1
+    internal class MarketAnalyzerTests
     {
         private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, VolumeIndicatorBlock>()));
 
@@ -38,17 +35,22 @@ namespace MarketProcessor.Tests
         };
 
         [Test]
-        public void Test()
+        public void Process_SimpleValues_ExpectedTypeIndicatorReturned()
         {
+            // Arrange
             var analyzer = new MarketAnalyzer();
+            IMarketIndicator marketIndicator = new RecurrentCandleIndicator();
+            var marketIndicatorType = marketIndicator.Type;
 
-            IMarketIndicator<BaseIndicatorBlock> marketIndicator = (IMarketIndicator<BaseIndicatorBlock>)(new RecurrentCandleIndicator()); 
-
+            // Act
             analyzer.SelectMarketIndicator(marketIndicator);
             analyzer.LoadCandleStickCharts(_testedCandleSticks);
             analyzer.Process();
 
-            var processedDataWithIndicatorName = analyzer.ProcessedCandleSticks;
+            var processedData = analyzer.ProcessedCandleSticks;
+
+            // Assert
+            Assert.AreEqual(marketIndicatorType, processedData.Keys.FirstOrDefault());
         }
     }
 }

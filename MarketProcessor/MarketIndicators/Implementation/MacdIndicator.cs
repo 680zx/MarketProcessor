@@ -3,12 +3,13 @@ using MarketProcessor.Entities;
 using MarketProcessor.Enums;
 using MarketProcessor.MarketIndicators.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MarketProcessor.Tests")]
 namespace MarketProcessor.MarketIndicators.Implementation
 {
-    internal class MacdIndicator : IMarketIndicator<MacdIndicatorBlock>
+    internal class MacdIndicator : IMarketIndicator
     {
         private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, RecurrentIndicatorBlock>()));
         private MaIndicator _shortPeriodMaIndicator;
@@ -25,11 +26,11 @@ namespace MarketProcessor.MarketIndicators.Implementation
             _smoothMaIndicator = smoothMaIndicator;
         }
 
-        public IList<MacdIndicatorBlock> Process(IList<MacdIndicatorBlock> candleSticks)
+        public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {
-            List<MacdIndicatorBlock> processedCandleSticks = (List<MacdIndicatorBlock>)(candleSticks);
+            List<MacdIndicatorBlock> processedCandleSticks = candleSticks.Cast<MacdIndicatorBlock>().ToList();
 
-            var maProcessedCandleSticks = ((List<BaseIndicatorBlock>)candleSticks).ConvertAll(i => (MaIndicatorBlock)i);
+            var maProcessedCandleSticks = candleSticks.Cast<MaIndicatorBlock>().ToList();
             IList<MaIndicatorBlock> shortPeriodMaProcessedCandleSticks = _shortPeriodMaIndicator.ProcessWithMaIndicatorBlock(maProcessedCandleSticks);
             IList<MaIndicatorBlock> longPeriodMaProcessedCandleSticks = _longPeriodMaIndicator.ProcessWithMaIndicatorBlock(maProcessedCandleSticks);
             IList<MaIndicatorBlock> smoothMaProcessedCandleSticks = _smoothMaIndicator.ProcessWithMaIndicatorBlock(maProcessedCandleSticks);
@@ -50,7 +51,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
                     processedCandleSticks[currentItemIndex].SignalMacdValue;
             }
 
-            return processedCandleSticks;
+            return processedCandleSticks.Cast<BaseIndicatorBlock>().ToList();
         }
     }
 }

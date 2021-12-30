@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using MarketProcessor.Entities;
+﻿using MarketProcessor.Entities;
 using MarketProcessor.Enums;
 using MarketProcessor.MarketConditionQualifiers.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MarketProcessor.MarketConditionQualifiers.Implementation
 {
@@ -13,7 +13,6 @@ namespace MarketProcessor.MarketConditionQualifiers.Implementation
     // V - Volume
     public class RamvQualifier : IMarketConditionQualifier
     {
-        private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, RecurrentIndicatorBlock>()));
 
         public MarketConditions GetCurrentMarketCondition(IDictionary<IndicatorType, IList<BaseIndicatorBlock>> processedCandleStickChartsDict)
         {
@@ -23,7 +22,7 @@ namespace MarketProcessor.MarketConditionQualifiers.Implementation
             {
                 if (processedCandleStickCharts.Key == IndicatorType.RecurrentCandle) 
                 {
-                    var recurrentCandleStickBlockList = _mapper.Map<IList<BaseIndicatorBlock>, IList<RecurrentIndicatorBlock>>(processedCandleStickCharts.Value);
+                    var recurrentCandleStickBlockList = processedCandleStickCharts.Value.Cast<RecurrentIndicatorBlock>().ToList();
                     foreach (var candleStickChart in recurrentCandleStickBlockList)
                     {
                         if (candleStickChart.IsSupport || candleStickChart.IsResistance)

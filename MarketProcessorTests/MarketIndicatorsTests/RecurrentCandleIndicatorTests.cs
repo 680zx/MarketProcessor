@@ -9,7 +9,7 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
 {
     public class RecurrentCandleIndicatorTests
     {
-        private IList<RecurrentIndicatorBlock> _testedCandleSticks = new List<RecurrentIndicatorBlock>
+        private IList<BaseIndicatorBlock> _testedCandleSticks = new List<BaseIndicatorBlock>
         {
             new RecurrentIndicatorBlock { CandleStickChart = new CandleStickChart { LowPrice = 57620.00, HighPrice = 58250.00 } },
             new RecurrentIndicatorBlock { CandleStickChart = new CandleStickChart { LowPrice = 57288.48, HighPrice = 57776.68 } },
@@ -51,7 +51,7 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
             new RecurrentIndicatorBlock { CandleStickChart = new CandleStickChart { LowPrice = 55691.00, HighPrice = 56416.84 } }
         };
 
-        private IMarketIndicator<RecurrentIndicatorBlock> _candleIndicator = new RecurrentCandleIndicator();
+        private IMarketIndicator _candleIndicator = new RecurrentCandleIndicator();
 
         [Test]
         public void Process_SimpleValuesList_ProcessedAndDesiredListsAreEqual()
@@ -67,7 +67,7 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
         public void Process_EmptyList_OutOfRangeExceptionThrown()
         {
             // Arrange
-            var emptyList = new List<RecurrentIndicatorBlock>();
+            var emptyList = new List<BaseIndicatorBlock>();
 
             // Act
             // Assert
@@ -77,12 +77,12 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
             });
         }
 
-        private static bool AreListsEqual(IList<RecurrentIndicatorBlock> list1, IList<RecurrentIndicatorBlock> list2)
+        private static bool AreListsEqual(IList<BaseIndicatorBlock> list1, IList<RecurrentIndicatorBlock> list2)
         {
             for (int i = 0; i < list1.Count; i++)
             {
-                if (((RecurrentIndicatorBlock)list1[i]).IsSupport != ((RecurrentIndicatorBlock)list2[i]).IsSupport ||
-                    ((RecurrentIndicatorBlock)list1[i]).IsResistance != ((RecurrentIndicatorBlock)list2[i]).IsResistance)
+                if (((RecurrentIndicatorBlock)list1[i]).IsSupport != list2[i].IsSupport ||
+                    ((RecurrentIndicatorBlock)list1[i]).IsResistance != list2[i].IsResistance)
                 {
                     return false;
                 }

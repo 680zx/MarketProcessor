@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace MarketProcessor.MarketIndicators.Implementation
 {
-    internal class LowVolumeSearchIndicator : IMarketIndicator<VolumeIndicatorBlock>
+    internal class LowVolumeSearchIndicator : IMarketIndicator
     {
         private double _maxToAvgVolumeDifference;
         private double _maxToLowVolumeDiference;
@@ -25,9 +25,10 @@ namespace MarketProcessor.MarketIndicators.Implementation
             _maxToLowVolumeDiference = maxToLowVolumdeDiference;
         }
 
-        public IList<VolumeIndicatorBlock> Process(IList<VolumeIndicatorBlock> candleSticks)
+        public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {
-            List<VolumeIndicatorBlock> processedCandleSticks = (List<VolumeIndicatorBlock>)candleSticks;
+            List<VolumeIndicatorBlock> processedCandleSticks = candleSticks.Cast<VolumeIndicatorBlock>().ToList();
+
             var maxCandleStickVolume = processedCandleSticks.Max(i => i.CandleStickVolume);
             var maxVolumeCandleStick = processedCandleSticks.Where(i => i.CandleStickVolume == maxCandleStickVolume)
                 .FirstOrDefault();
@@ -35,7 +36,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
             var avgCandleStickVolume = processedCandleSticks.Average(i => i.CandleStickVolume);
 
             if (maxCandleStickVolume / avgCandleStickVolume > _maxToAvgVolumeDifference &&
-                maxVolumeItemIndex != processedCandleSticks.Count - 1) // check that max volume item is not last
+                maxVolumeItemIndex != processedCandleSticks.Count - 1) // check that max volume block is not last on collection
             {
                 for (int index = maxVolumeItemIndex + 1; index < processedCandleSticks.Count; index++)
                 {
@@ -49,7 +50,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
                 }
             }
 
-            return processedCandleSticks;
+            return processedCandleSticks.Cast<BaseIndicatorBlock>().ToList();
         }
     }
 }

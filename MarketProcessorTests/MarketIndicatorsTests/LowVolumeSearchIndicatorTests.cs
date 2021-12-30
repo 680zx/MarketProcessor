@@ -9,7 +9,7 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
     [TestFixture]
     internal class LowVolumeSearchIndicatorTests
     {
-        private IList<VolumeIndicatorBlock> _testedCandleSticks = new List<VolumeIndicatorBlock>
+        private IList<BaseIndicatorBlock> _testedCandleSticks = new List<BaseIndicatorBlock>
         {
             new VolumeIndicatorBlock { CandleStickVolume = 89.579 },
             new VolumeIndicatorBlock { CandleStickVolume = 75.081 },
@@ -65,7 +65,7 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
             new VolumeIndicatorBlock { CandleStickVolume = 86.126, IsLowVolume = true }
         };
 
-        private IMarketIndicator<VolumeIndicatorBlock> _candleIndicator = new LowVolumeSearchIndicator();
+        private IMarketIndicator _candleIndicator = new LowVolumeSearchIndicator();
 
         [Test]
         public void Process_SimpleValuesList_ProcessedAndDesiredListsAreEqual()
@@ -74,14 +74,15 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
             var result = _candleIndicator.Process(_testedCandleSticks);
 
             // Assert
-            Assert.IsTrue(AreListsEqual(_desiredCandleSticksOutput, result));
+            Assert.IsTrue(AreListsEqual(result, _desiredCandleSticksOutput));
         }
 
-        private static bool AreListsEqual(IList<VolumeIndicatorBlock> list1, IList<VolumeIndicatorBlock> list2)
+        private static bool AreListsEqual(IList<BaseIndicatorBlock> list1, IList<VolumeIndicatorBlock> list2)
         {
             for (int i = 0; i < list1.Count; i++)
             {              
-                if (list1[i].IsLowVolume != list2[i].IsLowVolume || list1[i].IsLowVolume != list2[i].IsLowVolume)               
+                if (((VolumeIndicatorBlock)list1[i]).IsLowVolume != list2[i].IsLowVolume 
+                    || ((VolumeIndicatorBlock)list1[i]).IsLowVolume != list2[i].IsLowVolume)               
                     return false;
             }
 
