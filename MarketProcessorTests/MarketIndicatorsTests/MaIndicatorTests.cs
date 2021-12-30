@@ -44,11 +44,12 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
             Assert.IsTrue(AreListsEqual(result, _desiredOutputList));
         }
 
+        
+
         private static bool AreListsEqual(IList<BaseIndicatorBlock> list1, IList<MaIndicatorBlock> list2)
         {
             for (int i = 0; i < list1.Count; i++)
             {
-                System.Console.WriteLine($"1] {((MaIndicatorBlock)list1[i]).EmaValue}\t2] {list2[i].EmaValue}");
                 if (Math.Round(((MaIndicatorBlock)list1[i]).EmaValue, 2) != list2[i].EmaValue)
                     return false;
             }

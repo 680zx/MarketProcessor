@@ -27,7 +27,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
 
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {
-            List<VolumeIndicatorBlock> processedCandleSticks = candleSticks.Cast<VolumeIndicatorBlock>().ToList();
+            IList<VolumeIndicatorBlock> processedCandleSticks = candleSticks.Cast<VolumeIndicatorBlock>().ToList();
 
             var maxCandleStickVolume = processedCandleSticks.Max(i => i.CandleStickVolume);
             var maxVolumeCandleStick = processedCandleSticks.Where(i => i.CandleStickVolume == maxCandleStickVolume)

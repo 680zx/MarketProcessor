@@ -18,7 +18,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
             if (candleSticks == null || candleSticks.Count == 0)
                 throw new ArgumentOutOfRangeException("Check the passed list of candlesticks. It's null or empty.");
 
-            List<RecurrentIndicatorBlock> processedCandleSticks = candleSticks.Cast<RecurrentIndicatorBlock>().ToList();
+            IList<RecurrentIndicatorBlock> processedCandleSticks = candleSticks.Cast<RecurrentIndicatorBlock>().ToList();
 
             // The index starts from 2 because we have to compare current candle value 
             // with two previous values. The comparing window includes 5 neighbour candles,

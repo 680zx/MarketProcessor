@@ -26,12 +26,14 @@ namespace MarketProcessor.MarketIndicators.Implementation
 
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {
-            List<MacdIndicatorBlock> processedCandleSticks = candleSticks.Cast<MacdIndicatorBlock>().ToList();
+            IList<MacdIndicatorBlock> processedCandleSticks = candleSticks.Cast<MacdIndicatorBlock>().ToList();
 
-            var maProcessedCandleSticks = candleSticks.Cast<MaIndicatorBlock>().ToList();
-            IList<MaIndicatorBlock> shortPeriodMaProcessedCandleSticks = _shortPeriodMaIndicator.ProcessWithMaIndicatorBlock(maProcessedCandleSticks);
-            IList<MaIndicatorBlock> longPeriodMaProcessedCandleSticks = _longPeriodMaIndicator.ProcessWithMaIndicatorBlock(maProcessedCandleSticks);
-            IList<MaIndicatorBlock> smoothMaProcessedCandleSticks = _smoothMaIndicator.ProcessWithMaIndicatorBlock(maProcessedCandleSticks);
+            IList<MaIndicatorBlock> shortPeriodMaProcessedCandleSticks = _shortPeriodMaIndicator.Process(candleSticks)
+                .Cast<MaIndicatorBlock>().ToList();
+            IList<MaIndicatorBlock> longPeriodMaProcessedCandleSticks = _longPeriodMaIndicator.Process(candleSticks)
+                .Cast<MaIndicatorBlock>().ToList();
+            IList<MaIndicatorBlock> smoothMaProcessedCandleSticks = _smoothMaIndicator.Process(candleSticks)
+                .Cast<MaIndicatorBlock>().ToList();
 
             for (int currentItemIndex = 0; currentItemIndex < processedCandleSticks.Count; currentItemIndex++)
             {
