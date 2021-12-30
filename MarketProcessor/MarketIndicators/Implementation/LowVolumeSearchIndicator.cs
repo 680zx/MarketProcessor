@@ -1,6 +1,7 @@
 ﻿using MarketProcessor.Entities;
 using MarketProcessor.Enums;
 using MarketProcessor.MarketIndicators.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,22 +12,27 @@ namespace MarketProcessor.MarketIndicators.Implementation
         private double _maxToAvgVolumeDifference;
         private double _maxToLowVolumeDiference;
 
-        public double MaxToAvgVolumeDifference
-        {
-            get { return _maxToAvgVolumeDifference; }
-            set { _maxToAvgVolumeDifference = value; }
-        }
+        public double MaxToAvgVolumeDifference => _maxToAvgVolumeDifference;
 
         public IndicatorType Type => IndicatorType.LowVolumeSearcher;
 
-        public LowVolumeSearchIndicator(double maxToAvgVolumeDifference = 3, double maxToLowVolumdeDiference = 5)
+        public LowVolumeSearchIndicator(double maxToAvgVolumeDifference = 3, double maxToLowVolumeDiference = 5)
         {
+            if (maxToAvgVolumeDifference <= 0)
+                throw new ArgumentOutOfRangeException("Max to Average volume difference rate cannot be equal to 0 or less than 0", nameof(maxToAvgVolumeDifference));
+
+            if (maxToLowVolumeDiference < 1)
+                throw new ArgumentOutOfRangeException("Max to Low volume difference rate cannot be less than 1", nameof(maxToLowVolumeDiference));
+            
             _maxToAvgVolumeDifference = maxToAvgVolumeDifference;
-            _maxToLowVolumeDiference = maxToLowVolumdeDiference;
+            _maxToLowVolumeDiference = maxToLowVolumeDiference;
         }
 
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {
+            if (candleSticks == null || candleSticks.Count == 0)
+                throw new ArgumentOutOfRangeException("Check the passed list of candlesticks. It's null or empty.");
+
             IList<VolumeIndicatorBlock> processedCandleSticks = candleSticks.Cast<VolumeIndicatorBlock>().ToList();
 
             var maxCandleStickVolume = processedCandleSticks.Max(i => i.CandleStickVolume);

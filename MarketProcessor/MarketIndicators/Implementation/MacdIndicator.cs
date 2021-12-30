@@ -1,6 +1,7 @@
 ﻿using MarketProcessor.Entities;
 using MarketProcessor.Enums;
 using MarketProcessor.MarketIndicators.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -19,6 +20,13 @@ namespace MarketProcessor.MarketIndicators.Implementation
         public MacdIndicator(MaIndicator shortPeriodMaIndicator, MaIndicator longPeriodMaIndicator,
             MaIndicator smoothMaIndicator)
         {
+            if (shortPeriodMaIndicator == null)
+                throw new ArgumentNullException("Short Period Ma Indicator cannot be null", nameof(shortPeriodMaIndicator));
+            if (longPeriodMaIndicator == null)
+                throw new ArgumentNullException("Long Period Ma Indicator cannot be null", nameof(longPeriodMaIndicator));
+            if (smoothMaIndicator == null)
+                throw new ArgumentNullException("Smooth Ma Indicator cannot be null", nameof(smoothMaIndicator));
+
             _shortPeriodMaIndicator = shortPeriodMaIndicator; 
             _longPeriodMaIndicator = longPeriodMaIndicator;
             _smoothMaIndicator = smoothMaIndicator;
@@ -26,6 +34,9 @@ namespace MarketProcessor.MarketIndicators.Implementation
 
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {
+            if (candleSticks == null || candleSticks.Count == 0)
+                throw new ArgumentOutOfRangeException("Check the passed list of candlesticks. It's null or empty.");
+
             IList<MacdIndicatorBlock> processedCandleSticks = candleSticks.Cast<MacdIndicatorBlock>().ToList();
 
             IList<MaIndicatorBlock> shortPeriodMaProcessedCandleSticks = _shortPeriodMaIndicator.Process(candleSticks)

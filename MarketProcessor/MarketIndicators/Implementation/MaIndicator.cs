@@ -4,6 +4,7 @@ using MarketProcessor.MarketIndicators.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System;
 
 [assembly: InternalsVisibleTo("MarketProcessor.Tests")]
 namespace MarketProcessor.MarketIndicators.Implementation
@@ -24,11 +25,17 @@ namespace MarketProcessor.MarketIndicators.Implementation
 
         public MaIndicator(int period = 12)
         {
+            if (period < 1)
+                throw new ArgumentOutOfRangeException("Period must be greater than 1", nameof(period));
+
             _alphaRate = 2 / (period + 1);
         }
 
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {
+            if (candleSticks == null || candleSticks.Count == 0)
+                throw new ArgumentOutOfRangeException("Check the passed list of candlesticks. It's null or empty.");
+
             List<MaIndicatorBlock> processedCandleSticks = candleSticks.Cast<MaIndicatorBlock>().ToList();
 
             // The first EMA value is usually equal to the price of the first value on the candlestick chart

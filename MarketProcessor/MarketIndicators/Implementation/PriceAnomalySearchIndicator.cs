@@ -1,6 +1,7 @@
 ﻿using MarketProcessor.Entities;
 using MarketProcessor.Enums;
 using MarketProcessor.MarketIndicators.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,11 +15,17 @@ namespace MarketProcessor.MarketIndicators.Implementation
 
         public PriceAnomalySearchIndicator(double lowPriceBorderCoefficient = 3)
         {
+            if (lowPriceBorderCoefficient < 1)
+                throw new ArgumentOutOfRangeException("Low price border rate cannot be less than 1", nameof(lowPriceBorderCoefficient));
+
             _lowPriceBorderCoefficient = lowPriceBorderCoefficient;
         }
         
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {
+            if (candleSticks == null || candleSticks.Count == 0)
+                throw new ArgumentOutOfRangeException("Check the passed list of candlesticks. It's null or empty.");
+
             List<PriceIndicatorBlock> processedCandleSticks = candleSticks.Cast<PriceIndicatorBlock>().ToList();
 
             var maxCandleStickRealBodyValue = processedCandleSticks.Max(i => i.CandleStickChart.RealBody);
