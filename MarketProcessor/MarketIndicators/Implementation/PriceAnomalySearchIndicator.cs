@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MarketProcessor.Entities;
+﻿using MarketProcessor.Entities;
 using MarketProcessor.Enums;
 using MarketProcessor.MarketIndicators.Interfaces;
 using System.Collections.Generic;
@@ -9,7 +8,6 @@ namespace MarketProcessor.MarketIndicators.Implementation
 {
     internal class PriceAnomalySearchIndicator : IMarketIndicator
     {
-        private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, VolumeIndicatorBlock>()));
         private double _lowPriceBorderCoefficient;
 
         public IndicatorType Type => IndicatorType.PriceAnomalySearcher;

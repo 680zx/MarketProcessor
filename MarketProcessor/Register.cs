@@ -1,5 +1,4 @@
-﻿using MarketProcessor.Entities;
-using MarketProcessor.Enums;
+﻿using MarketProcessor.Enums;
 using MarketProcessor.MarketIndicators.Implementation;
 using MarketProcessor.MarketIndicators.Interfaces;
 using System.Collections.Generic;

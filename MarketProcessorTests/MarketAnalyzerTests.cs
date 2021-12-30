@@ -11,8 +11,6 @@ namespace MarketProcessor.Tests
     [TestFixture]
     internal class MarketAnalyzerTests
     {
-        private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, VolumeIndicatorBlock>()));
-
         private IList<BaseIndicatorBlock> _testedCandleSticks = new List<BaseIndicatorBlock>
         {
             new RecurrentIndicatorBlock { CandleStickChart = new CandleStickChart { LowPrice = 57620.00, HighPrice = 58250.00 } },

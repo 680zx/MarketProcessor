@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MarketProcessor.Entities;
+﻿using MarketProcessor.Entities;
 using MarketProcessor.Enums;
 using MarketProcessor.MarketIndicators.Interfaces;
 using System.Collections.Generic;
@@ -13,7 +12,6 @@ namespace MarketProcessor.MarketIndicators.Implementation
     // where t - value of price at a particular point
     internal class MaIndicator : IMarketIndicator
     {
-        private Mapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<BaseIndicatorBlock, RecurrentIndicatorBlock>()));
         private double _alphaRate;
 
         public double AlphaRate 
