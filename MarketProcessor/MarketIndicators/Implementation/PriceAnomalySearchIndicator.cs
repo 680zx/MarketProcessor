@@ -13,6 +13,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
 
         public IndicatorType Type => IndicatorType.PriceAnomalySearcher;
 
+        // TODO: Extend the indicator with low price anomaly search algorithm
         public PriceAnomalySearchIndicator(double lowPriceBorderCoefficient = 3)
         {
             if (lowPriceBorderCoefficient < 1)
