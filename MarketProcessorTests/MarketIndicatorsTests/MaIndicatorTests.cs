@@ -44,7 +44,47 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
             Assert.IsTrue(AreListsEqual(result, _desiredOutputList));
         }
 
+        [Test]
+        public void Constructor_PeriodLessThan1_ExceptionThrown()
+        {
+            // Arrange
+            const int PERIOD = -1;
+
+            // Act
+            // Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                var maIndicator = new MaIndicator(PERIOD);
+            });
+        }
+
+        [Test]
+        public void Process_CandleSticksEqualsNull_ExceptionThrown()
+        {
+            // Arrange
+            List<BaseIndicatorBlock> candleSticks = null;
+
+            // Act
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                _maIndicator.Process(candleSticks);
+            });
+        }
         
+        [Test]
+        public void Process_CandleSticksListIsEmpty_ExceptionThrown()
+        {
+            // Arrange
+            var candleSticks = new List<BaseIndicatorBlock>();
+
+            // Act
+            // Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                _maIndicator.Process(candleSticks);
+            });
+        }
 
         private static bool AreListsEqual(IList<BaseIndicatorBlock> list1, IList<MaIndicatorBlock> list2)
         {

@@ -33,8 +33,11 @@ namespace MarketProcessor.MarketIndicators.Implementation
 
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {
-            if (candleSticks == null || candleSticks.Count == 0)
-                throw new ArgumentOutOfRangeException("Check the passed list of candlesticks. It's null or empty.");
+            if (candleSticks == null)
+                throw new ArgumentNullException("Passed list of candlesticks equals null", nameof(candleSticks));
+
+            if (candleSticks.Count == 0)
+                throw new ArgumentException("Passed list of candlesticks is empty", nameof(candleSticks));
 
             List<MaIndicatorBlock> processedCandleSticks = candleSticks.Cast<MaIndicatorBlock>().ToList();
 
