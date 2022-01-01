@@ -28,7 +28,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
             if (period < 1)
                 throw new ArgumentOutOfRangeException("Period must be greater than 1", nameof(period));
 
-            _alphaRate = 2 / (period + 1);
+            _alphaRate = 2 / (double)(period + 1);
         }
 
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)

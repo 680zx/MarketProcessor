@@ -37,7 +37,20 @@ namespace MarketProcessor.MarketIndicators.Implementation
             if (candleSticks == null || candleSticks.Count == 0)
                 throw new ArgumentOutOfRangeException("Check the passed list of candlesticks. It's null or empty.");
 
-            IList<MacdIndicatorBlock> processedCandleSticks = candleSticks.Cast<MacdIndicatorBlock>().ToList();
+            //var convertedCandleSticks = candleSticks.Cast<MacdIndicatorBlock>().ToList();
+
+            IList<MacdIndicatorBlock> processedCandleSticks = new List<MacdIndicatorBlock>();
+            IList<MacdIndicatorBlock> processedCandleSticks1 = candleSticks
+                .Cast<MacdIndicatorBlock>().ToList()
+                .ConvertAll(stick => new MacdIndicatorBlock { });
+            //convertedCandleSticks.ForEach(i => 
+            //{
+            //    processedCandleSticks.Add(i);
+            //});
+            foreach (var item in candleSticks)
+            {
+                processedCandleSticks.Add((MacdIndicatorBlock)item);
+            }
 
             IList<MaIndicatorBlock> shortPeriodMaProcessedCandleSticks = _shortPeriodMaIndicator.Process(candleSticks)
                 .Cast<MaIndicatorBlock>().ToList();
