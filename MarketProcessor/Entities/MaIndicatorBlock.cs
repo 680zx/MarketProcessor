@@ -1,14 +1,20 @@
-﻿namespace MarketProcessor.Entities
+﻿using System;
+
+namespace MarketProcessor.Entities
 {
-    public class MaIndicatorBlock : BaseIndicatorBlock
+    public class MaIndicatorBlock : BaseIndicatorBlock, ICloneable
     {
         public double EmaValue { get; set; }
 
-        public void Clone(MaIndicatorBlock maIndicatorBlock)
+        public object Clone()
         {
-            this.CandleStickChartId = maIndicatorBlock.CandleStickChartId;
-            this.CandleStickVolume = maIndicatorBlock.CandleStickVolume;
-            this.EmaValue = maIndicatorBlock.EmaValue;
+            return new MacdIndicatorBlock
+            {
+                CandleStickChart = (CandleStickChart)CandleStickChart.Clone(),
+                CandleStickChartId = this.CandleStickChartId,
+                CandleStickVolume = this.CandleStickVolume,
+                EmaValue = this.EmaValue
+            };
         }
     }
 }
