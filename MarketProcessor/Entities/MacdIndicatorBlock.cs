@@ -8,7 +8,7 @@ namespace MarketProcessor.Entities
         public double SignalMacdValue { get; set; }
         public double MacdDelta { get; set; }
 
-        public object Clone()
+        public new object Clone()
         {
             return new MacdIndicatorBlock
             {
