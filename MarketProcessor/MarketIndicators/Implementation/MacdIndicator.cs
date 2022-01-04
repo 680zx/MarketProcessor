@@ -52,8 +52,8 @@ namespace MarketProcessor.MarketIndicators.Implementation
                 .Cast<MaIndicatorBlock>().ToList();
             IList<MaIndicatorBlock> longPeriodMaProcessedCandleSticks = _longPeriodMaIndicator.Process(GetNewMaIndicatorBlocks(candleSticks))
                 .Cast<MaIndicatorBlock>().ToList();
-            IList<MaIndicatorBlock> smoothMaProcessedCandleSticks = _smoothMaIndicator.Process(GetNewMaIndicatorBlocks(candleSticks))
-                .Cast<MaIndicatorBlock>().ToList();
+            //IList<MaIndicatorBlock> smoothMaProcessedCandleSticks = _smoothMaIndicator.Process(GetNewMaIndicatorBlocks(candleSticks))
+                //.Cast<MaIndicatorBlock>().ToList();
 
             for (int currentItemIndex = 0; currentItemIndex < processedCandleSticks.Count; currentItemIndex++)
             {
@@ -61,10 +61,13 @@ namespace MarketProcessor.MarketIndicators.Implementation
                 processedCandleSticks[currentItemIndex].MacdValue = shortPeriodMaProcessedCandleSticks[currentItemIndex].EmaValue -
                     longPeriodMaProcessedCandleSticks[currentItemIndex].EmaValue;
 
-                // Signal_MACD = Ema_Smooth * (EMA_short(Price) - EMA_long(Price)) =
-                // = Ema_Smooth * MACD
-                processedCandleSticks[currentItemIndex].SignalMacdValue = processedCandleSticks[currentItemIndex].MacdValue *
-                    smoothMaProcessedCandleSticks[currentItemIndex].EmaValue;
+                // Signal_MACD = Ema_Smooth(EMA_short(Price) - EMA_long(Price)) =
+                // = Ema_Smooth(MACD)
+                if (currentItemIndex == 0)
+                    processedCandleSticks[currentItemIndex].SignalMacdValue = processedCandleSticks[currentItemIndex].MacdValue;
+                else processedCandleSticks[currentItemIndex].SignalMacdValue = _smoothMaIndicator.GetCurrentMaValue(
+                    processedCandleSticks[currentItemIndex].MacdValue, 
+                    processedCandleSticks[currentItemIndex].SignalMacdValue);
 
                 // MACD Delta = MACD - Signal_MACD
                 processedCandleSticks[currentItemIndex].MacdDelta = processedCandleSticks[currentItemIndex].MacdValue -

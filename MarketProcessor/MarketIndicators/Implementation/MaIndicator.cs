@@ -46,11 +46,17 @@ namespace MarketProcessor.MarketIndicators.Implementation
 
             for (int currentItemIndex = 1; currentItemIndex < processedCandleSticks.Count; currentItemIndex++)
             {
-                processedCandleSticks[currentItemIndex].EmaValue = _alphaRate * processedCandleSticks[currentItemIndex].CandleStickChart.ClosePrice +
-                        (1 - _alphaRate) * processedCandleSticks[currentItemIndex - 1].EmaValue;
+                processedCandleSticks[currentItemIndex].EmaValue = GetCurrentMaValue(
+                    processedCandleSticks[currentItemIndex].CandleStickChart.ClosePrice,
+                    processedCandleSticks[currentItemIndex - 1].EmaValue);
             }
 
             return processedCandleSticks.Cast<BaseIndicatorBlock>().ToList();
-        }      
+        }
+
+        public double GetCurrentMaValue(double currentValue, double prevMaValue)
+        {
+            return _alphaRate * currentValue + (1 - _alphaRate) * prevMaValue;
+        }
     }
 }
