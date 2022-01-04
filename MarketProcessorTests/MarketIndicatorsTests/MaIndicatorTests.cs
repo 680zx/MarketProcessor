@@ -62,7 +62,7 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
         public void Process_CandleSticksEqualsNull_ExceptionThrown()
         {
             // Arrange
-            List<BaseIndicatorBlock> candleSticks = null;
+            List<BaseIndicatorBlock>? candleSticks = null;
 
             // Act
             // Assert

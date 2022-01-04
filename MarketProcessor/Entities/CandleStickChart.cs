@@ -11,7 +11,7 @@ namespace MarketProcessor.Entities
         public double ClosePrice { get; set; }
         public double UpperShadow { get; set; }
         public double LowerShadow { get; set; }
-        public double RealBody { get; set; }
+        public double RealBody { get => Math.Abs(ClosePrice - OpenPrice); }
 
         public object Clone()
         {
@@ -22,8 +22,7 @@ namespace MarketProcessor.Entities
                 LowPrice = LowPrice,
                 ClosePrice = ClosePrice,
                 UpperShadow = UpperShadow,
-                LowerShadow = LowerShadow,
-                RealBody = RealBody
+                LowerShadow = LowerShadow
             };
         }
     }

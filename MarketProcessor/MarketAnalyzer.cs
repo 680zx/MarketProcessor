@@ -15,8 +15,8 @@ namespace MarketProcessor
 
         public void SelectMarketIndicator(IMarketIndicator marketIndicator)
         {
-            //_marketIndicator = marketIndicator  ?? 
-            //    throw new ArgumentNullException("Passed market indicator is null."));
+            _marketIndicator = marketIndicator ??
+                throw new ArgumentNullException("Passed market indicator is null.");
             _marketIndicator = marketIndicator;
         }
 

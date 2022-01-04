@@ -17,7 +17,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
             set
             {
                 if (value < 1)
-                    throw new ArgumentException("The low price border coefficient cannot be less than 1", nameof(value));
+                    throw new ArgumentException("The price border coefficient cannot be less than 1", nameof(value));
                 _priceBorderCoefficient = value;
             }
         }
