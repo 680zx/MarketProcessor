@@ -9,23 +9,31 @@ namespace MarketProcessor.MarketIndicators.Implementation
 {
     internal class PriceAnomalySearchIndicator : IMarketIndicator
     {
-        private double _lowPriceBorderCoefficient;
+        private double _priceBorderCoefficient;
+
+        public double PriceBorderCoefficient
+        {
+            get => _priceBorderCoefficient;
+            set
+            {
+                if (value < 1)
+                    throw new ArgumentException("The low price border coefficient cannot be less than 1", nameof(value));
+                _priceBorderCoefficient = value;
+            }
+        }
 
         public IndicatorType Type => IndicatorType.PriceAnomalySearcher;
 
         // TODO: Extend the indicator with low price anomaly search algorithm
-        public PriceAnomalySearchIndicator(double lowPriceBorderCoefficient = 3)
+        public PriceAnomalySearchIndicator(double priceBorderCoefficient = 3)
         {
-            if (lowPriceBorderCoefficient < 1)
-                throw new ArgumentOutOfRangeException("Low price border rate cannot be less than 1", nameof(lowPriceBorderCoefficient));
-
-            _lowPriceBorderCoefficient = lowPriceBorderCoefficient;
+            PriceBorderCoefficient = priceBorderCoefficient;
         }
         
         public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
         {
             if (candleSticks == null || candleSticks.Count == 0)
-                throw new ArgumentOutOfRangeException("Check the passed list of candlesticks. It's null or empty.");
+                throw new ArgumentException("Check the passed list of candlesticks. It's null or empty.");
 
             List<PriceIndicatorBlock> processedCandleSticks = candleSticks.Cast<PriceIndicatorBlock>().ToList();
 
@@ -36,7 +44,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
             var maxCandleStickRealBodyIndex = processedCandleSticks.IndexOf(maxCandleStickRealBodyItem);
             var avgCandleStickRealBodyValue = processedCandleSticks.Average(i => i.CandleStickChart.RealBody);
 
-            if (maxCandleStickRealBodyValue / avgCandleStickRealBodyValue > _lowPriceBorderCoefficient &&
+            if (maxCandleStickRealBodyValue / avgCandleStickRealBodyValue > _priceBorderCoefficient &&
                 maxCandleStickRealBodyIndex != processedCandleSticks.Count - 1)
             {
                 processedCandleSticks[maxCandleStickRealBodyIndex].IsAnomaly = true;
