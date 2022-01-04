@@ -8,11 +8,13 @@ using System.Linq;
 namespace MarketProcessor.MarketConditionQualifiers.Implementation
 {
     // R - Recurrent
-    // A - Anomaly
+    // A - price Anomaly
     // M - MACD
-    // V - Volume
+    // V - Volume anomaly
     public class RamvQualifier : IMarketConditionQualifier
     {
+        private int _minRecurrentCandleStickPeriod = 4;
+        private int _maxRecurrentCandleStickPeriod = 8;
 
         public MarketConditions GetCurrentMarketCondition(IDictionary<IndicatorType, IList<BaseIndicatorBlock>> processedCandleStickChartsDict)
         {

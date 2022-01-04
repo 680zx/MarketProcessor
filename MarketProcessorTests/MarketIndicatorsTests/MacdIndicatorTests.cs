@@ -3,7 +3,6 @@ using MarketProcessor.MarketIndicators.Implementation;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MarketProcessor.Tests.MarketIndicatorsTests
 {
