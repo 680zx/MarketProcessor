@@ -23,13 +23,11 @@ namespace MarketProcessor
         public void Process()
         {
             if (_marketIndicator == null)
-                throw new ArgumentNullException(nameof(_marketIndicator), 
-                    "_marketIndicator is null. Select the market indicator before processing the data. " +
-                    "Use SelectMarketIndicator method to select the indicator.");
+                throw new ArgumentNullException("_marketIndicator is null. Select the market indicator before processing the data. Use SelectMarketIndicator method to select the indicator.", 
+                    nameof(_marketIndicator));
 
             if (_candleSticks.Count == 0)
-                throw new ArgumentException("Number of candlesticks is 0, pass correct data",
-                    nameof(_candleSticks));
+                throw new ArgumentException("Number of candlesticks is 0, pass correct data", nameof(_candleSticks));
 
             var processedCandleSticks = _marketIndicator.Process(_candleSticks);
             ProcessedCandleSticks.Add(_marketIndicator.Type, processedCandleSticks);
@@ -37,8 +35,7 @@ namespace MarketProcessor
 
         public void LoadCandleStickCharts(IList<BaseIndicatorBlock> candleSticks)
         {
-            _candleSticks = candleSticks ?? throw new ArgumentNullException(nameof(candleSticks),
-                    "Passed candlesticks data is null.");
+            _candleSticks = candleSticks ?? throw new ArgumentNullException("Passed candlesticks data is null.", nameof(candleSticks));
         }
     }
 }

@@ -56,21 +56,20 @@ namespace MarketProcessor.MarketConditionQualifiers.Implementation
                 if (processedCandleStickCharts.Key == IndicatorType.RecurrentCandle) 
                 {
                     var recurrentCandleStickBlockList = processedCandleStickCharts.Value.Cast<RecurrentIndicatorBlock>().ToList();
-                    //foreach (var candleStickChart in recurrentCandleStickBlockList)
-                    //{
-                    //    var supportLevelIndices = recurrentCandleStickBlockList
-                    //}
                     var supportLevelIndices = recurrentCandleStickBlockList.Where(i => i.IsSupport).ToList();
                     var resistanceLevelIndices = recurrentCandleStickBlockList.Where(i => i.IsResistance).ToList();
 
-                    for (int i = 0; i < supportLevelIndices.Count; i++)
-                    {
-                        var periodDiff = supportLevelIndices[i + 1].CandleStickChartId - supportLevelIndices[i].CandleStickChartId;
-                        if (periodDiff >= _minRecurrentCandleStickPeriod && periodDiff <= _maxRecurrentCandleStickPeriod)
-                            totalScore++;
-                        else
-                            totalScore--;
-                    }
+                    if (resistanceLevelIndices.Count <= 1)
+                        totalScore -= 5;
+                    else
+                        for (int i = 0; i < supportLevelIndices.Count; i++)
+                        {
+                            var periodDiff = supportLevelIndices[i + 1].CandleStickChartId - supportLevelIndices[i].CandleStickChartId;
+                            if (periodDiff >= _minRecurrentCandleStickPeriod && periodDiff <= _maxRecurrentCandleStickPeriod)
+                                totalScore++;
+                            else
+                                totalScore--;
+                        }
                 }
             }
 
