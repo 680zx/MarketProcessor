@@ -49,31 +49,44 @@ namespace MarketProcessor.MarketConditionQualifiers.Implementation
         public MarketConditions GetCurrentMarketCondition(IDictionary<IndicatorType, IList<BaseIndicatorBlock>> processedCandleStickChartsDict)
         {
             var result = MarketConditions.Undefined;
+            // TODO: продумать алгоритм формирования баллов totalScore
+            // возможно, стоит для каждого индикатора назначить переменную
+            // типа bool, и уже по ним судить о состоянии рынка
             var totalScore = 0;
 
             foreach (var processedCandleStickCharts in processedCandleStickChartsDict)
             {
-                if (processedCandleStickCharts.Key == IndicatorType.RecurrentCandle) 
+                switch (processedCandleStickCharts.Key) 
                 {
-                    var recurrentCandleStickBlockList = processedCandleStickCharts.Value.Cast<RecurrentIndicatorBlock>().ToList();
-                    var supportLevelIndices = recurrentCandleStickBlockList.Where(i => i.IsSupport).ToList();
-                    var resistanceLevelIndices = recurrentCandleStickBlockList.Where(i => i.IsResistance).ToList();
-
-                    if (resistanceLevelIndices.Count <= 1)
-                        totalScore -= 5;
-                    else
-                        for (int i = 0; i < supportLevelIndices.Count; i++)
-                        {
-                            var periodDiff = supportLevelIndices[i + 1].CandleStickChartId - supportLevelIndices[i].CandleStickChartId;
-                            if (periodDiff >= _minRecurrentCandleStickPeriod && periodDiff <= _maxRecurrentCandleStickPeriod)
-                                totalScore++;
-                            else
-                                totalScore--;
-                        }
+                    case IndicatorType.RecurrentCandle:
+                        totalScore += GetMarketConditionByRecurrentIndicator(processedCandleStickCharts.Value);
+                        break;
                 }
             }
 
             return result;
+        }
+
+        public int GetMarketConditionByRecurrentIndicator(IList<BaseIndicatorBlock> candleSticks)
+        {
+            int resultScore = 0;
+            var recurrentCandleStickBlockList = candleSticks.Cast<RecurrentIndicatorBlock>().ToList();
+            var supportLevelIndices = recurrentCandleStickBlockList.Where(i => i.IsSupport).ToList();
+            var resistanceLevelIndices = recurrentCandleStickBlockList.Where(i => i.IsResistance).ToList();
+
+            if (resistanceLevelIndices.Count <= 1)
+                resultScore -= 5;
+            else
+                for (int i = 0; i < supportLevelIndices.Count; i++)
+                {
+                    var periodDiff = supportLevelIndices[i + 1].CandleStickChartId - supportLevelIndices[i].CandleStickChartId;
+                    if (periodDiff >= _minRecurrentCandleStickPeriod && periodDiff <= _maxRecurrentCandleStickPeriod)
+                        resultScore++;
+                    else
+                        resultScore--;
+                }
+
+            return resultScore;
         }
     }
 }
