@@ -2,6 +2,7 @@
 using MarketProcessor.MarketIndicators.Implementation;
 using MarketProcessor.MarketIndicators.Interfaces;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace MarketProcessor.Tests.MarketIndicatorsTests
@@ -53,6 +54,48 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
 
             // Assert
             Assert.IsTrue(AreListsEqual(result, _desiredOutputList));
+        }
+
+        [Test]
+        public void Process_InputListIsEmpty_ExceptionThrown()
+        {
+            // Arrange
+            var inputList = new List<BaseIndicatorBlock>();
+
+            // Act
+            // Assert
+            Assert.Throws<ArgumentException>(() => 
+            { 
+                _marketIndicator.Process(inputList);
+            });
+        }
+
+        [Test]
+        public void Process_InputListEqualsNull_ExceptionThrown()
+        {
+            // Arrange
+            List<BaseIndicatorBlock>? inputList = null;
+
+            // Act
+            // Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                _marketIndicator.Process(inputList);
+            });
+        }
+
+        [Test]
+        public void PriceBorderCoefficient_ValueLessThan1_ExceptionThrown()
+        {
+            // Arrange
+            const double INCORRECT_PRICE_BORDER_COEFFICIENT = -1;
+
+            // Act
+            // Assert
+            Assert.Throws<ArgumentException>(() => 
+            {
+                ((PriceAnomalySearchIndicator)_marketIndicator).PriceBorderCoefficient = INCORRECT_PRICE_BORDER_COEFFICIENT;
+            });
         }
 
         private static bool AreListsEqual(IList<BaseIndicatorBlock> list1, IList<PriceIndicatorBlock> list2)
