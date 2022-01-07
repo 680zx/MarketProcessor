@@ -16,16 +16,16 @@ namespace MarketProcessor
 
         private static Dictionary<IndicatorType, IMarketIndicator> _marketIndicators = new Dictionary<IndicatorType, IMarketIndicator>
         {
-            { IndicatorType.RecurrentCandle, new RecurrentCandleIndicator() },
+            [IndicatorType.RecurrentCandle] = new RecurrentCandleIndicator(),
 
-            { IndicatorType.MA, new MaIndicator() },
+            [IndicatorType.MA] = new MaIndicator(),
 
-            { IndicatorType.MACD, new MacdIndicator(new MaIndicator(MA_INDICATOR_SHORT_PERIOD),
-                new MaIndicator(MA_INDICATOR_LONG_PERIOD), new MaIndicator(MA_INDICATOR_SMOOTH)) },
+            [IndicatorType.MACD] = new MacdIndicator(new MaIndicator(MA_INDICATOR_SHORT_PERIOD),
+                new MaIndicator(MA_INDICATOR_LONG_PERIOD), new MaIndicator(MA_INDICATOR_SMOOTH)),
 
-            { IndicatorType.LowVolumeSearcher, new LowVolumeSearchIndicator(MAX_TO_AVG_DIFFERENCE_COEFFICIENT, HIGH_VOLUME_BORDER_COEFFICIENT) },
+            [IndicatorType.LowVolumeSearcher] = new LowVolumeSearchIndicator(MAX_TO_AVG_DIFFERENCE_COEFFICIENT, HIGH_VOLUME_BORDER_COEFFICIENT),
 
-            { IndicatorType.PriceAnomalySearcher, new PriceAnomalySearchIndicator(LOW_PRICE_BORDER_COEFFICIENT) }
+            [IndicatorType.PriceAnomalySearcher] = new PriceAnomalySearchIndicator(LOW_PRICE_BORDER_COEFFICIENT)
         };
 
         internal static Dictionary<IndicatorType, IMarketIndicator> MarketIndicators => _marketIndicators;
