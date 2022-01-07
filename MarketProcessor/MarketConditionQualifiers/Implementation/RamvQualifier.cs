@@ -93,7 +93,7 @@ namespace MarketProcessor.MarketConditionQualifiers.Implementation
             var supportLevelIndices = recurrentCandleStickBlockList.Where(i => i.IsSupport).ToList();
             var resistanceLevelIndices = recurrentCandleStickBlockList.Where(i => i.IsResistance).ToList();
 
-            if (resistanceLevelIndices.Count <= 1)
+            if (resistanceLevelIndices.Count <= 1 || supportLevelIndices.Count <= 1)
                 resultScore -= 5;
             else
                 for (int i = 0; i < supportLevelIndices.Count; i++)
