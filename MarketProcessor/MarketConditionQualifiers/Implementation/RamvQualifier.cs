@@ -49,9 +49,9 @@ namespace MarketProcessor.MarketConditionQualifiers.Implementation
             }
         }
 
-        public MarketConditions GetCurrentMarketCondition(IDictionary<IndicatorType, IList<BaseIndicatorBlock>> processedCandleStickChartsDict)
+        public MarketCondition GetCurrentMarketCondition(IDictionary<IndicatorType, IList<BaseIndicatorBlock>> processedCandleStickChartsDict)
         {
-            var result = MarketConditions.Undefined;
+            var result = MarketCondition.Undefined;
             // TODO: продумать алгоритм формирования баллов totalScore
             // возможно, стоит для каждого индикатора назначить переменную
             // типа bool, и уже по ним судить о состоянии рынка
@@ -81,9 +81,9 @@ namespace MarketProcessor.MarketConditionQualifiers.Implementation
             }
 
             if (totalScore > _flatMarketMinScoreBorder)
-                return MarketConditions.Flat;
+                return MarketCondition.Flat;
             else
-                return MarketConditions.Undefined;
+                return MarketCondition.Undefined;
         }
 
         private int GetMarketConditionByRecurrentIndicator(IList<BaseIndicatorBlock> candleSticks)

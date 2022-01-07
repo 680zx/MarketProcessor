@@ -1,7 +1,7 @@
 ﻿
 namespace MarketProcessor.Enums
 {
-    public enum MarketConditions
+    public enum MarketCondition
     {
         Bull,
         Bear,

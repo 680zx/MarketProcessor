@@ -17,7 +17,7 @@ namespace MarketProcessor.Tests
             var regIndicator = Register.MarketIndicators[indicator];
 
             // Act
-            var regIndicatorType = regIndicator.Type; 
+            var regIndicatorType = regIndicator.Type;
 
             // Assert
             Assert.AreEqual(indicator, regIndicatorType);

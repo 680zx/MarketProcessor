@@ -10,7 +10,7 @@ namespace MarketProcessor
         private MarketAnalyzer _analyzer = new MarketAnalyzer();
         private IMarketConditionQualifier _marketConditionQualifier;
 
-        public MarketConditions GetCurrentMarketCondition()
+        public MarketCondition GetCurrentMarketCondition()
         {
             foreach (var indicator in Register.MarketIndicators)
             {
