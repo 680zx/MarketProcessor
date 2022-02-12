@@ -19,6 +19,8 @@ namespace MarketProcessor.MarketConditionQualifiers.Implementation
         private int _maxRecurrentCandleStickPeriod = 8;
         private double _macdMaxDeviationFromAxisRatio = 0.2; // in percents; so 0.2 means 20% 
 
+        public int Id { get; set; }
+
         public int MinRecurrentCandleStickPeriod
         {
             get => _minRecurrentCandleStickPeriod;
@@ -49,12 +51,29 @@ namespace MarketProcessor.MarketConditionQualifiers.Implementation
             }
         }
 
+        public double MacdMaxDeviationFromAxisRatio
+        {
+            get => _macdMaxDeviationFromAxisRatio;
+            set
+            {
+                if (value < -1)
+                    throw new ArgumentException("MACD deviation from axis cannot be less than -1", nameof(value));
+
+                if (value > 1)
+                    throw new ArgumentException("MACD deviation from axis cannot be greater than 1", nameof(value));
+
+                _macdMaxDeviationFromAxisRatio = value;
+            }
+        }
+
         public MarketCondition GetCurrentMarketCondition(IDictionary<IndicatorType, IList<BaseIndicatorBlock>> processedCandleStickChartsDict)
         {
             var result = MarketCondition.Undefined;
             // TODO: продумать алгоритм формирования баллов totalScore
             // возможно, стоит для каждого индикатора назначить переменную
             // типа bool, и уже по ним судить о состоянии рынка
+            // Sorry for using Russian language, but I suggest you
+            // to copy comment above and translate it using translate.google.com
             var totalScore = 0;
             int? anomalyIndex = null;
 
