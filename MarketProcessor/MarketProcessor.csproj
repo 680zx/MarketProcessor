@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>MarketProcessor</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Stas Lekontsev</Authors>
+    <Company>Stas Lekontsev</Company>
+    <Product>MarketProcessor</Product>
+    <Description>A simple market processor designed to determine the state of the market</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <RepositoryUrl>https://github.com/680zx/MarketProcessor</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
