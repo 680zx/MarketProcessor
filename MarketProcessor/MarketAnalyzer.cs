@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using MarketProcessor.Entities;
+﻿using MarketProcessor.Entities;
 using MarketProcessor.Enums;
 using MarketProcessor.MarketIndicators.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace MarketProcessor
 {

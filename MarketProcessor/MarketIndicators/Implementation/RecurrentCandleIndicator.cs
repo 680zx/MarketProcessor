@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using MarketProcessor.Entities;
-using MarketProcessor.MarketIndicators.Interfaces;
+﻿using MarketProcessor.Entities;
 using MarketProcessor.Enums;
+using MarketProcessor.MarketIndicators.Interfaces;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MarketProcessor.Tests")]
 namespace MarketProcessor.MarketIndicators.Implementation

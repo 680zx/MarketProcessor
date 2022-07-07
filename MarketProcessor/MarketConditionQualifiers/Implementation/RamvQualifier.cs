@@ -21,6 +21,8 @@ namespace MarketProcessor.MarketConditionQualifiers.Implementation
 
         public int Id { get; set; }
 
+        public string Name => "RAMV Qualifier";
+
         public int MinRecurrentCandleStickPeriod
         {
             get => _minRecurrentCandleStickPeriod;

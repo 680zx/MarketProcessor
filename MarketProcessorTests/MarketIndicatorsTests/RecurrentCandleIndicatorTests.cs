@@ -1,9 +1,9 @@
-using NUnit.Framework;
-using System.Collections.Generic;
 using MarketProcessor.Entities;
 using MarketProcessor.MarketIndicators.Implementation;
 using MarketProcessor.MarketIndicators.Interfaces;
+using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 
 namespace MarketProcessor.Tests.MarketIndicatorsTests
 {
