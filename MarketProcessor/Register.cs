@@ -1,6 +1,6 @@
 ﻿using MarketProcessor.Enums;
-using MarketProcessor.MarketIndicators.Implementation;
-using MarketProcessor.MarketIndicators.Interfaces;
+using MarketProcessor.CsMarketIndicators.Implementation;
+using MarketProcessor.CsMarketIndicators.Interfaces;
 using System.Collections.Generic;
 
 namespace MarketProcessor
@@ -14,7 +14,7 @@ namespace MarketProcessor
         private const double HIGH_VOLUME_BORDER_COEFFICIENT = 2.5;
         private const double LOW_PRICE_BORDER_COEFFICIENT = 3;
 
-        private static Dictionary<IndicatorType, IMarketIndicator> _marketIndicators = new Dictionary<IndicatorType, IMarketIndicator>
+        private static Dictionary<IndicatorType, ICsIndicator> _marketIndicators = new Dictionary<IndicatorType, ICsIndicator>
         {
             [IndicatorType.RecurrentCandle] = new RecurrentCandleIndicator(),
 
@@ -28,6 +28,6 @@ namespace MarketProcessor
             [IndicatorType.PriceAnomalySearcher] = new PriceAnomalySearchIndicator(LOW_PRICE_BORDER_COEFFICIENT)
         };
 
-        internal static Dictionary<IndicatorType, IMarketIndicator> MarketIndicators => _marketIndicators;
+        internal static Dictionary<IndicatorType, ICsIndicator> MarketIndicators => _marketIndicators;
     }
 }

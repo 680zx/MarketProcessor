@@ -1,6 +1,6 @@
 ﻿using MarketProcessor.Entities;
-using MarketProcessor.MarketIndicators.Implementation;
-using MarketProcessor.MarketIndicators.Interfaces;
+using MarketProcessor.CsMarketIndicators.Implementation;
+using MarketProcessor.CsMarketIndicators.Interfaces;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -43,14 +43,14 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
         };
 
         private const double PRICE_BORDER_RATE = 2.5;
-        private IMarketIndicator _marketIndicator = new PriceAnomalySearchIndicator(PRICE_BORDER_RATE);
+        private ICsIndicator _marketIndicator = new PriceAnomalySearchIndicator(PRICE_BORDER_RATE);
 
         [Test]
         public void Process_SimpleValues_ProcessedAndDesiredListsAreEqual()
         {
             // Arrange
             // Act
-            var result = _marketIndicator.Process(_testedCandleSticks);
+            var result = _marketIndicator.GetProcessed(_testedCandleSticks);
 
             // Assert
             Assert.IsTrue(AreListsEqual(result, _desiredOutputList));
@@ -66,7 +66,7 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
             // Assert
             Assert.Throws<ArgumentException>(() => 
             { 
-                _marketIndicator.Process(inputList);
+                _marketIndicator.GetProcessed(inputList);
             });
         }
 
@@ -80,7 +80,7 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
             // Assert
             Assert.Throws<ArgumentException>(() =>
             {
-                _marketIndicator.Process(inputList);
+                _marketIndicator.GetProcessed(inputList);
             });
         }
 

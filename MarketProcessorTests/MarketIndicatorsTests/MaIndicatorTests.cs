@@ -1,5 +1,5 @@
 ﻿using MarketProcessor.Entities;
-using MarketProcessor.MarketIndicators.Implementation;
+using MarketProcessor.CsMarketIndicators.Implementation;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -38,7 +38,7 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
             _maIndicator.AlphaRate = 1.0 / 13.0; // Desired output list EmaValues are calclated using this rate
 
             // Act
-            var result = _maIndicator.Process(_testedCandleSticks);
+            var result = _maIndicator.GetProcessed(_testedCandleSticks);
 
             // Assert
             Assert.IsTrue(AreListsEqual(result, _desiredOutputList));
@@ -68,7 +68,7 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
             // Assert
             Assert.Throws<ArgumentNullException>(() =>
             {
-                _maIndicator.Process(candleSticks);
+                _maIndicator.GetProcessed(candleSticks);
             });
         }
         
@@ -82,7 +82,7 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
             // Assert
             Assert.Throws<ArgumentException>(() =>
             {
-                _maIndicator.Process(candleSticks);
+                _maIndicator.GetProcessed(candleSticks);
             });
         }
 

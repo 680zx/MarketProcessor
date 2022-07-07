@@ -1,5 +1,6 @@
 ﻿using MarketProcessor.Entities;
 using MarketProcessor.Enums;
+using MarketProcessor.MarketAnalyzers;
 using MarketProcessor.MarketConditionQualifiers.Interfaces;
 using System.Collections.Generic;
 
@@ -7,7 +8,7 @@ namespace MarketProcessor
 {
     public class MarketProcessor
     {
-        private MarketAnalyzer _analyzer = new MarketAnalyzer();
+        private CsMarketAnalyzer _analyzer = new CsMarketAnalyzer();
         private IMarketConditionQualifier _marketConditionQualifier;
 
         public MarketCondition GetCurrentMarketCondition()

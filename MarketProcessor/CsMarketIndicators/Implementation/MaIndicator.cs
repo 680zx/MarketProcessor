@@ -1,17 +1,17 @@
 ﻿using MarketProcessor.Entities;
 using MarketProcessor.Enums;
-using MarketProcessor.MarketIndicators.Interfaces;
+using MarketProcessor.CsMarketIndicators.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MarketProcessor.Tests")]
-namespace MarketProcessor.MarketIndicators.Implementation
+namespace MarketProcessor.CsMarketIndicators.Implementation
 {
     // EMA_t = alpha * Price_t + (1 - alpha) * EMA_(t-1),
     // where t - value of price at a particular point
-    internal class MaIndicator : IMarketIndicator
+    internal class MaIndicator : ICsIndicator
     {
         private double _alphaRate;
 
@@ -31,7 +31,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
             _alphaRate = 2 / (double)(period + 1);
         }
 
-        public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
+        public IList<BaseIndicatorBlock> GetProcessed(IList<BaseIndicatorBlock> candleSticks)
         {
             if (candleSticks == null)
                 throw new ArgumentNullException("Passed list of candlesticks equals null", nameof(candleSticks));

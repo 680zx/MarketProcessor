@@ -1,13 +1,13 @@
 ﻿using MarketProcessor.Entities;
 using MarketProcessor.Enums;
-using MarketProcessor.MarketIndicators.Interfaces;
+using MarketProcessor.CsMarketIndicators.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MarketProcessor.MarketIndicators.Implementation
+namespace MarketProcessor.CsMarketIndicators.Implementation
 {
-    internal class LowVolumeSearchIndicator : IMarketIndicator
+    internal class LowVolumeSearchIndicator : ICsIndicator
     {
         private double _maxToAvgVolumeDifference;
         private double _maxToLowVolumeDiference;
@@ -28,7 +28,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
             _maxToLowVolumeDiference = maxToLowVolumeDiference;
         }
 
-        public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
+        public IList<BaseIndicatorBlock> GetProcessed(IList<BaseIndicatorBlock> candleSticks)
         {
             if (candleSticks == null || candleSticks.Count == 0)
                 throw new ArgumentOutOfRangeException("Check the passed list of candlesticks. It's null or empty.");

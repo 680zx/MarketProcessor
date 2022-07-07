@@ -1,5 +1,4 @@
-﻿
-namespace MarketProcessor.Enums
+﻿namespace MarketProcessor.Enums
 {
     public enum MarketCondition
     {

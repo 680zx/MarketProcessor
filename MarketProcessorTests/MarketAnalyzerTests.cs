@@ -1,14 +1,15 @@
 ﻿using MarketProcessor.Entities;
-using MarketProcessor.MarketIndicators.Implementation;
-using MarketProcessor.MarketIndicators.Interfaces;
+using MarketProcessor.CsMarketIndicators.Implementation;
+using MarketProcessor.CsMarketIndicators.Interfaces;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using MarketProcessor.MarketAnalyzers;
 
 namespace MarketProcessor.Tests
 {
     [TestFixture]
-    internal class MarketAnalyzerTests
+    internal class CsMarketAnalyzerTests
     {
         private IList<BaseIndicatorBlock> _testedCandleSticks = new List<BaseIndicatorBlock>
         {
@@ -35,8 +36,8 @@ namespace MarketProcessor.Tests
         public void Process_SimpleValues_ExpectedTypeIndicatorReturned()
         {
             // Arrange
-            var analyzer = new MarketAnalyzer();
-            IMarketIndicator marketIndicator = new RecurrentCandleIndicator();
+            var analyzer = new CsMarketAnalyzer();
+            ICsIndicator marketIndicator = new RecurrentCandleIndicator();
             var marketIndicatorType = marketIndicator.Type;
 
             // Act

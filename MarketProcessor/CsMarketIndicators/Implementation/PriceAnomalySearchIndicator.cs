@@ -1,13 +1,13 @@
 ﻿using MarketProcessor.Entities;
 using MarketProcessor.Enums;
-using MarketProcessor.MarketIndicators.Interfaces;
+using MarketProcessor.CsMarketIndicators.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MarketProcessor.MarketIndicators.Implementation
+namespace MarketProcessor.CsMarketIndicators.Implementation
 {
-    internal class PriceAnomalySearchIndicator : IMarketIndicator
+    internal class PriceAnomalySearchIndicator : ICsIndicator
     {
         private double _priceBorderCoefficient;
 
@@ -30,7 +30,7 @@ namespace MarketProcessor.MarketIndicators.Implementation
             PriceBorderCoefficient = priceBorderCoefficient;
         }
         
-        public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
+        public IList<BaseIndicatorBlock> GetProcessed(IList<BaseIndicatorBlock> candleSticks)
         {
             if (candleSticks == null || candleSticks.Count == 0)
                 throw new ArgumentException("Check the passed list of candlesticks. It's null or empty.");

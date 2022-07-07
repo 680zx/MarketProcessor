@@ -1,19 +1,19 @@
 ﻿using MarketProcessor.Entities;
 using MarketProcessor.Enums;
-using MarketProcessor.MarketIndicators.Interfaces;
+using MarketProcessor.CsMarketIndicators.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MarketProcessor.Tests")]
-namespace MarketProcessor.MarketIndicators.Implementation
+namespace MarketProcessor.CsMarketIndicators.Implementation
 {
-    internal class RecurrentCandleIndicator : IMarketIndicator
+    internal class RecurrentCandleIndicator : ICsIndicator
     {
         public IndicatorType Type => IndicatorType.RecurrentCandle;
 
-        public IList<BaseIndicatorBlock> Process(IList<BaseIndicatorBlock> candleSticks)
+        public IList<BaseIndicatorBlock> GetProcessed(IList<BaseIndicatorBlock> candleSticks)
         {
             if (candleSticks == null || candleSticks.Count == 0)
                 throw new ArgumentOutOfRangeException("Check the passed list of candlesticks. It's null or empty.");

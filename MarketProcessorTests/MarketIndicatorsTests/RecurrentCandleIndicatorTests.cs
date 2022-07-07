@@ -1,6 +1,6 @@
 using MarketProcessor.Entities;
-using MarketProcessor.MarketIndicators.Implementation;
-using MarketProcessor.MarketIndicators.Interfaces;
+using MarketProcessor.CsMarketIndicators.Implementation;
+using MarketProcessor.CsMarketIndicators.Interfaces;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -51,13 +51,13 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
             new RecurrentIndicatorBlock { CandleStickChart = new CandleStickChart { LowPrice = 55691.00, HighPrice = 56416.84 } }
         };
 
-        private IMarketIndicator _candleIndicator = new RecurrentCandleIndicator();
+        private ICsIndicator _candleIndicator = new RecurrentCandleIndicator();
 
         [Test]
         public void Process_SimpleValuesList_ProcessedAndDesiredListsAreEqual()
         {
             // Act
-            var processedCandlerSticks = _candleIndicator.Process(_testedCandleSticks);
+            var processedCandlerSticks = _candleIndicator.GetProcessed(_testedCandleSticks);
 
             // Assert
             Assert.IsTrue(AreListsEqual(processedCandlerSticks, _desiredOutputList));
@@ -73,7 +73,7 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
             // Assert
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                _candleIndicator.Process(emptyList);
+                _candleIndicator.GetProcessed(emptyList);
             });
         }
 

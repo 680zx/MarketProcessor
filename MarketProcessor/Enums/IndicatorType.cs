@@ -6,6 +6,7 @@
         MACD,
         MA,
         PriceAnomalySearcher,
-        LowVolumeSearcher
+        LowVolumeSearcher,
+        Pd
     }
 }

@@ -1,5 +1,5 @@
 ﻿using MarketProcessor.Entities;
-using MarketProcessor.MarketIndicators.Implementation;
+using MarketProcessor.CsMarketIndicators.Implementation;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -40,7 +40,7 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
         public void Process_SimpleValues_ProcessedAndDesiredListsAreEqual()
         {
             // Act
-            var result = _macdIndicator.Process(_testedCandleSticks);
+            var result = _macdIndicator.GetProcessed(_testedCandleSticks);
 
             // Assert
             Assert.IsTrue(AreListsEqual(result, _desiredOutputList));

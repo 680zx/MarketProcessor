@@ -1,6 +1,6 @@
 ﻿using MarketProcessor.Entities;
-using MarketProcessor.MarketIndicators.Implementation;
-using MarketProcessor.MarketIndicators.Interfaces;
+using MarketProcessor.CsMarketIndicators.Implementation;
+using MarketProcessor.CsMarketIndicators.Interfaces;
 using NUnit.Framework;
 using System.Collections.Generic;
 
@@ -65,13 +65,13 @@ namespace MarketProcessor.Tests.MarketIndicatorsTests
             new VolumeIndicatorBlock { CandleStickVolume = 86.126, IsLowVolume = true }
         };
 
-        private IMarketIndicator _candleIndicator = new LowVolumeSearchIndicator();
+        private ICsIndicator _candleIndicator = new LowVolumeSearchIndicator();
 
         [Test]
         public void Process_SimpleValuesList_ProcessedAndDesiredListsAreEqual()
         {
             // Act
-            var result = _candleIndicator.Process(_testedCandleSticks);
+            var result = _candleIndicator.GetProcessed(_testedCandleSticks);
 
             // Assert
             Assert.IsTrue(AreListsEqual(result, _desiredCandleSticksOutput));

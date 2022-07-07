@@ -1,19 +1,19 @@
 ﻿using MarketProcessor.Entities;
 using MarketProcessor.Enums;
-using MarketProcessor.MarketIndicators.Interfaces;
+using MarketProcessor.CsMarketIndicators.Interfaces;
 using System;
 using System.Collections.Generic;
 
-namespace MarketProcessor
+namespace MarketProcessor.MarketAnalyzers
 {
-    public class MarketAnalyzer
+    public class CsMarketAnalyzer
     {
         private IList<BaseIndicatorBlock> _candleSticks;
-        private IMarketIndicator _marketIndicator;
+        private ICsIndicator _marketIndicator;
 
         internal IDictionary<IndicatorType, IList<BaseIndicatorBlock>> ProcessedCandleSticks = new Dictionary<IndicatorType, IList<BaseIndicatorBlock>>();
 
-        public void SelectMarketIndicator(IMarketIndicator marketIndicator)
+        public void SelectMarketIndicator(ICsIndicator marketIndicator)
         {
             _marketIndicator = marketIndicator ??
                 throw new ArgumentNullException("Passed market indicator is null.", nameof(marketIndicator));
@@ -28,7 +28,7 @@ namespace MarketProcessor
             if (_candleSticks.Count == 0)
                 throw new ArgumentException("Number of candlesticks is 0, pass correct data", nameof(_candleSticks));
 
-            var processedCandleSticks = _marketIndicator.Process(_candleSticks);
+            var processedCandleSticks = _marketIndicator.GetProcessed(_candleSticks);
             ProcessedCandleSticks.Add(_marketIndicator.Type, processedCandleSticks);
         }
 
